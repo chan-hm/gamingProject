@@ -1,6 +1,8 @@
 ﻿* {
-    font-family: 'Kiwi Maru', serif;
+    /*font-family: 'Kiwi Maru', serif;*/
+    font-family: 'Hind', sans-serif;
     color: white;
+    user-select: none;
 }
 
 .navbar-custom {
@@ -20,9 +22,10 @@
     padding-left: 45%;
 }
 
-hr {
+.home_hr {
     background-color: white;
     width: 90%;
+    
     /*  margin: 5vh 10vh;*/
 }
 
@@ -63,6 +66,7 @@ hr {
 
 .parallax p {
     font-size: 3vh;
+    user-select: none;
 }
 
 .text-center a {
@@ -77,8 +81,9 @@ hr {
 /*Challenge CSS*/
 .parallax .col-md-4 {
     border: outset;
+    border-color: pink;
     padding: 8% 5%;
-    background-color: hsla(290,60%,70%,0.3);
+    /*background-color: hsla(290,60%,70%,0.3);*/
 }
 
 /*Footer CSS*/
@@ -87,23 +92,19 @@ hr {
     color: white;
 }
 
-    .footer h1 {
-        font-size: 15px;
-        margin: 25px 0;
-    }
-
-    .footer p {
-        font-size: 12px;
-    }
+.footer h1 {
+    font-size: 2vh;
+    margin: 3vh 0;
+}
 
 .copyright {
-    margin-bottom: -80px;
+    margin-bottom: -5vh;
     text-align: center;
-    font-size: 15px;
-    padding-bottom: 20px;
+    font-size: 2vh;
+    padding-bottom: 5vh;
 }
 
 .footer .row .fa {
-    padding-right: 20px;
-    font-size: 15px;
+    padding-right: 1vh;
+    font-size: 2vh;
 }
