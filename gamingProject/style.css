@@ -1,5 +1,18 @@
 ﻿* {
     font-family: 'Kiwi Maru', serif;
+    color: white;
+}
+
+.navbar-custom {
+    background-color: black;
+}
+
+.navbar-custom a{
+    color: white;
+}
+
+.navbar-custom a:hover{
+    color: grey;
 }
 
 /*Navbar Title*/
@@ -7,14 +20,90 @@
     padding-left: 45%;
 }
 
-
-/*Set the caption on the top*/
-.carousel-caption h1 {
-    margin-bottom: 45%;
-/*    background-color: black;*/
-    /*opacity: 0.9;*/
+hr {
+    background-color: white;
+    width: 90%;
+    /*  margin: 5vh 10vh;*/
 }
 
+/*Gaming Partner CSS*/
+/*Set the caption on the top*/
+.carousel-caption h1 {
+    margin-bottom: 50%;
+}
+
+/*.parallax .col-md-5 {
+    border: double;
+    border-color: white;
+    background-color: hsla(290,60%,70%,0.3);
+    padding: 5vh;
+}*/
+
+
+/*Set the height of the slide img*/
 .carousel-inner img {
     max-height: 90vh;
+}
+
+/*Parallax effect*/
+.parallax {
+    background-image: url('home_bg.jpg');
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*Change the text color in parallax effect*/
+.parallax h1 {
+    color: white;
+    user-select: none;
+}
+
+.parallax p {
+    font-size: 3vh;
+}
+
+.text-center a {
+    color: pink;
+}
+
+.text-center a:hover {
+    color: grey; 
+    text-decoration: none;
+}
+
+/*Challenge CSS*/
+.parallax .col-md-4 {
+    border: outset;
+    padding: 8% 5%;
+    background-color: hsla(290,60%,70%,0.3);
+}
+
+/*Footer CSS*/
+.footer {
+    background: black;
+    color: white;
+}
+
+    .footer h1 {
+        font-size: 15px;
+        margin: 25px 0;
+    }
+
+    .footer p {
+        font-size: 12px;
+    }
+
+.copyright {
+    margin-bottom: -80px;
+    text-align: center;
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+
+.footer .row .fa {
+    padding-right: 20px;
+    font-size: 15px;
 }
