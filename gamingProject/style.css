@@ -4,6 +4,17 @@
 
 /*Navbar Title*/
 .navbar-brand {
-    padding-left: 50%;
+    padding-left: 45%;
 }
 
+
+/*Set the caption on the top*/
+.carousel-caption h1 {
+    margin-bottom: 45%;
+/*    background-color: black;*/
+    /*opacity: 0.9;*/
+}
+
+.carousel-inner img {
+    max-height: 90vh;
+}
