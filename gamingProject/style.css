@@ -105,9 +105,9 @@
 /*Form CSS*/
 .form-group {
     width: 80%;
-    box-shadow: 4vh 4vh 10vh 2vh white;
-    background: paleturquoise;
-    opacity: 0.93;
+    box-shadow: 4vh 4vh 10vh 2vh cornsilk;
+    background: aliceblue;
+    opacity: 0.95;
     margin: 4% auto 0;
     text-align: center;
     border-radius: 20px;  
@@ -121,4 +121,19 @@
     color: black;
     font-size: 3vh;
     text-align: left;
+}
+
+.form-group a {
+    color:black;
+}
+
+.form-group a:hover {
+    color: pink;
+    text-decoration: none;
+}
+
+.form_hr {
+    background-color: black;
+    width: 90%;
+    margin: 3vh 10vh;
 }
