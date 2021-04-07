@@ -30,7 +30,7 @@ namespace gamingProject
         [WebMethod]
         public string CreateAccount(string username, string email, string password, string re_enter)
         {
-            // if password confirmation matches & email is never used, the account will be created
+            // if password confirmation matches & email &/ username is never used, the account will be created
             if (password == re_enter)
             {
                 string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
@@ -39,7 +39,7 @@ namespace gamingProject
                 MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
                 MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
-                sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(email));
+                sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
                 sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
                 sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
 
@@ -54,7 +54,11 @@ namespace gamingProject
                 {
                     var e_str = e.ToString();
 
-                    if (e_str.Contains("email_UNIQUE"))
+                    if (e_str.Contains("username_UNIQUE"))
+                        {
+                            return "The username you entered is already in use.";
+                        }
+                    else if (e_str.Contains("email_UNIQUE"))
                     {
                         return "The email addresss you entered is already in use.";
                     }
@@ -69,7 +73,7 @@ namespace gamingProject
 
             else
             {
-                return "The password confirmation does not match.";
+                return "The passwords do not match.";
             }
         }
 
