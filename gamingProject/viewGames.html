@@ -29,6 +29,29 @@
     <title>Select a Game</title>
 
     <script type="text/javascript">
+        function SelectGame() {
+            var webMethod = "gamingProject.asmx/SelectGame";
+            var parameters = { gamename: $('#').val()};
+            console.log(parameters);
+
+            var json_data = JSON.stringify(parameters);
+            console.log(json_data);
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: json_data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
+
+                   
+                }
+            });
+        }
         
     </script>
 </head>
@@ -42,6 +65,19 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!--<div class="collapse navbar-collapse" id="navbaritems">-->
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_username_id" href="#"><i class="fa fa-user-circle-o pe-md-2"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_logout_id" href="#">Sign Out</a>
+                </li>
+            </ul>
+            <!--</div>-->
+
         </div>
     </nav>
 
@@ -58,7 +94,7 @@
                     <h5 class="card-title text-center">League of Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="lol" id="game_lol_id" onclick="#">Select</button>
                     </div>
                 </div>
             </div>
@@ -72,7 +108,7 @@
                     <h5 class="card-title text-center">Apex Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="apex" id="game_apex_id" onclick="#">Select</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +122,7 @@
                     <h5 class="card-title text-center">CS GO</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="csgo" id="game_csgo_id" onclick="#">Select</button>
                     </div>
                 </div>
             </div>

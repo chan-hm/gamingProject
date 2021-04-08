@@ -24,13 +24,14 @@ namespace gamingProject
     [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
+        // list all users info
         [WebMethod]
         public Users[] ViewUsers()
         {
             DataTable sqlDt = new DataTable("Users");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM users";
+            string sqlSelect = "SELECT * FROM pj2.users";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -51,9 +52,6 @@ namespace gamingProject
             }
             return user.ToArray();
         }
-
-
-
 
         // creating an account with email & password
         [WebMethod]
@@ -113,7 +111,7 @@ namespace gamingProject
             bool success = false;
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM users WHERE username = @usernameValue AND password = @passwordValue";
+            string sqlSelect = "SELECT * FROM pj2.users WHERE username = @usernameValue AND password = @passwordValue";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -138,38 +136,34 @@ namespace gamingProject
             return success;
         }
 
-        [WebMethod(EnableSession = true)]
-        public bool Select(string username, string password)
+        // list the game the user selects
+        [WebMethod]
+        public Games[] SelectGame(string gameName)
         {
-            bool success = false;
+            DataTable sqlDt = new DataTable("Games");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM users WHERE username = @usernameValue AND password = @passwordValue";
+            string sqlSelect = "SELECT * FROM pj2.gamesname WHERE game_name = @gameNameValue";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
-            sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
-            sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
+            sqlCommand.Parameters.AddWithValue("@gameNameValue", HttpUtility.UrlDecode(gameName));
 
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            DataTable sqlDt = new DataTable("accounts");
             sqlDa.Fill(sqlDt);
 
-            if (sqlDt.Rows.Count > 0)
+            List<Games> game = new List<Games>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
             {
-                // create session which allows to retrieve data among a particular user
-                Session["user_id"] = sqlDt.Rows[0]["user_id"];
-                Session["username"] = sqlDt.Rows[0]["username"];
-                Session["email"] = sqlDt.Rows[0]["email"];
-                Session["password"] = sqlDt.Rows[0]["password"];
-
-                success = true;
+                game.Add(new Games
+                {
+                    name_id = Convert.ToInt32(sqlDt.Rows[i]["name_id"]),
+                    game_name = sqlDt.Rows[i]["game_name"].ToString(),
+                });
             }
-            return success;
+            return game.ToArray();
         }
-
-
 
     }
 }
