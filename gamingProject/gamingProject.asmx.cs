@@ -138,6 +138,37 @@ namespace gamingProject
             return success;
         }
 
+        [WebMethod(EnableSession = true)]
+        public bool Select(string username, string password)
+        {
+            bool success = false;
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT * FROM users WHERE username = @usernameValue AND password = @passwordValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
+            sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable("accounts");
+            sqlDa.Fill(sqlDt);
+
+            if (sqlDt.Rows.Count > 0)
+            {
+                // create session which allows to retrieve data among a particular user
+                Session["user_id"] = sqlDt.Rows[0]["user_id"];
+                Session["username"] = sqlDt.Rows[0]["username"];
+                Session["email"] = sqlDt.Rows[0]["email"];
+                Session["password"] = sqlDt.Rows[0]["password"];
+
+                success = true;
+            }
+            return success;
+        }
+
 
 
     }

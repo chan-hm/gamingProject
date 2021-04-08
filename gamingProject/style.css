@@ -101,7 +101,7 @@
     font-size: 2vh;
 }
 
-/*Signup*/
+/*Signup & Login*/
 /*Form CSS*/
 .form-group {
     width: 80%;
@@ -137,3 +137,12 @@
     width: 90%;
     margin: 3vh 10vh;
 }
+
+/*View games*/
+.card-title {
+    color: black;
+}
+
+/*.card button {
+    margin-left: 35%;
+}*/
