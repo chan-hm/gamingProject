@@ -136,7 +136,7 @@ namespace gamingProject
             return success;
         }
 
-        // list the game the user selects
+        // list the gamename_id & game_name the user selects
         [WebMethod]
         public Games[] SelectGame(string gameName)
         {
@@ -163,6 +163,36 @@ namespace gamingProject
                 });
             }
             return game.ToArray();
+        }
+
+        // save the gamename_id the users select to db
+        [WebMethod]
+        public string SelectGame2(string gameName)
+        {
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "INSERT INTO `pj2`.`users` (`game_played`) VALUES (@gamePlayedValue);";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            // !!!!!!!!!! gamePlayedValue is an int, gameName is a str
+            sqlCommand.Parameters.AddWithValue("@gamePlayedValue", HttpUtility.UrlDecode(gameName));  
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return "";
+            }
+
+            catch (Exception e)
+            {
+                var e_str = e.ToString();
+                return e_str;      
+            }
+            sqlConnection.Close();
+          
         }
 
     }

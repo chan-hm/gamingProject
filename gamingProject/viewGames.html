@@ -29,9 +29,9 @@
     <title>Select a Game</title>
 
     <script type="text/javascript">
-        function SelectGame() {
+        function SelectGame(gameValue) {
             var webMethod = "gamingProject.asmx/SelectGame";
-            var parameters = { gamename: $('#').val()};
+            var parameters = { gameName: gameValue };
             console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
@@ -43,12 +43,29 @@
                 data: json_data,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    var responseFromServer = response.d;
-                    console.log(responseFromServer);
+                success: function (array) {
+                    console.log(array);
 
-                   
+                    var infoArray = array.d;
+                    console.log(infoArray);
+
+                    for (var i = 0; i < infoArray.length; i++) {
+                        if (infoArray[i]["game_name"] == "lol") {
+                            //testing
+                            // may transfer to a page -- lol ranking sys
+                            alert("1: lol");
+                        }
+                        else if (infoArray[i]["game_name"] == "apex") {
+                            //testing
+                             // may transfer to a page -- apex ranking sys
+                            alert("2: apex");
+                        }
+                        else {
+                            //testing
+                             // may transfer to a page -- csgo ranking sys
+                            alert("3: csgo");
+                        }
+                    }    
                 }
             });
         }
@@ -94,7 +111,7 @@
                     <h5 class="card-title text-center">League of Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="lol" id="game_lol_id" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="lol" id="game_lol_id" onclick="SelectGame(this.value)">Select</button>
                     </div>
                 </div>
             </div>
