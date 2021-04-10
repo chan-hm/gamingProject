@@ -33,10 +33,10 @@
         function SignUp() {
             var webMethod = "gamingProject.asmx/CreateAccount";
             var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), re_enter: $('#reenter_id').val() };
-            console.log(parameters);
+            //console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
+            //console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -47,7 +47,7 @@
                 success: function (response) {
                     console.log(response);
                     var responseFromServer = response.d;
-                    console.log(responseFromServer);
+                    //console.log(responseFromServer);
 
                     $('#username_id').css("border-color", "transparent");
                     $('#email_id').css("border-color", "transparent");
@@ -57,7 +57,8 @@
                     /*document.getElementById("signup_btn_id").disabled = false;*/
 
                     if (responseFromServer == "Account Created.") {
-                        window.location.replace("home.html");
+                        alert("Your account has been created. Please Sign in.");
+                        window.location.replace("login.html");
                     }
                     else if (responseFromServer == "The username you entered is already in use.") {     
                         $('#username_id').focus();

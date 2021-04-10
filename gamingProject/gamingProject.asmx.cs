@@ -166,30 +166,32 @@ namespace gamingProject
         }
 
         // save the gamename_id the users select to db
-        [WebMethod]
-        public string SelectGame2(string gameName)
+        [WebMethod(EnableSession = true)]
+        public string SelectGame2(int gameNum)
         {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "INSERT INTO `pj2`.`users` (`game_played`) VALUES (@gamePlayedValue);";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `game_played` = (@gamePlayedValue) WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
             // !!!!!!!!!! gamePlayedValue is an int, gameName is a str
-            sqlCommand.Parameters.AddWithValue("@gamePlayedValue", HttpUtility.UrlDecode(gameName));  
+            sqlCommand.Parameters.AddWithValue("@gamePlayedValue", Convert.ToInt32(gameNum));
 
             sqlConnection.Open();
 
             try
             {
                 sqlCommand.ExecuteNonQuery();
-                return "";
+                return "Added game_Played into db";
             }
 
             catch (Exception e)
             {
                 var e_str = e.ToString();
-                return e_str;      
+                return e_str;
             }
             sqlConnection.Close();
           

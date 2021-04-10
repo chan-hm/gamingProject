@@ -69,6 +69,48 @@
                 }
             });
         }
+
+
+        function SelectGame2(gameValue) {
+            var webMethod = "gamingProject.asmx/SelectGame2";
+            var parameters = { gameNum: gameValue };
+            console.log(parameters);
+
+            var json_data = JSON.stringify(parameters);
+            console.log(json_data);
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: json_data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(repsone);
+
+                    //var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    //for (var i = 0; i < infoArray.length; i++) {
+                    //    if (infoArray[i]["game_name"] == "lol") {
+                    //        //testing
+                    //        // may transfer to a page -- lol ranking sys
+                    //        alert("1: lol");
+                    //    }
+                    //    else if (infoArray[i]["game_name"] == "apex") {
+                    //        //testing
+                    //        // may transfer to a page -- apex ranking sys
+                    //        alert("2: apex");
+                    //    }
+                    //    else {
+                    //        //testing
+                    //        // may transfer to a page -- csgo ranking sys
+                    //        alert("3: csgo");
+                    //    }
+                    //}
+                }
+            });
+        }
         
     </script>
 </head>
@@ -111,7 +153,7 @@
                     <h5 class="card-title text-center">League of Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="lol" id="game_lol_id" onclick="SelectGame(this.value)">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="1" id="game_lol_id" onclick="SelectGame2(this.value)">Select</button>
                     </div>
                 </div>
             </div>
@@ -125,7 +167,7 @@
                     <h5 class="card-title text-center">Apex Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="apex" id="game_apex_id" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="2" id="game_apex_id" onclick="SelectGame2(this.value)">Select</button>
                     </div>
                 </div>
             </div>
@@ -139,7 +181,7 @@
                     <h5 class="card-title text-center">CS GO</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="csgo" id="game_csgo_id" onclick="#">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="3" id="game_csgo_id" onclick="SelectGame2(this.value)">Select</button>
                     </div>
                 </div>
             </div>
