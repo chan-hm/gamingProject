@@ -29,6 +29,96 @@
     <title>Select a Game</title>
 
     <script type="text/javascript">
+        // display the username on navbar
+        function ViewUser() {
+            var webMethod = "gamingProject.asmx/ViewUser";
+            
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    console.log(array);
+
+                    var infoArray = array.d;
+                    console.log(infoArray);
+
+                    var username = infoArray[0]["username"];
+                    console.log(username);
+
+                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
+                }
+            });
+        }
+
+        function Logout() {
+            var webMethod = "gamingProject.asmx/Logout";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+
+                    var responseFromServer = response.d;
+
+                    if (responseFromServer == false) {
+                        window.location.replace("home.html");
+                    }
+                    else {
+                        alert("Error: Unable to sign out.");
+                    }
+                },
+                error: function (e) {
+                    alert("Error: Unable to sign out.");
+                }
+            });
+        }
+
+        // able to select a game and transfer to the ranking system page of the game selected
+        function SelectGame(gameValue) {
+            var webMethod = "gamingProject.asmx/SelectGame";
+            var parameters = { gameNum: gameValue };
+            console.log(parameters);
+
+            var json_data = JSON.stringify(parameters);
+            console.log(json_data);
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: json_data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
+
+                    // transfer to a page -- lol ranking sys
+                    if (responseFromServer == "Added game_Played = 1 into db") {
+                        window.location.replace("rsLOL.html");
+                    }
+
+                    // transfer to a page -- apex ranking sys
+                    else if (responseFromServer == "Added game_Played = 2 into db") {
+                        window.location.replace("rsAPEX.html");
+                    }
+
+                    // transfer to a page -- lol ranking sys
+                    else if (responseFromServer == "Added game_Played = 3 into db") {
+                        window.location.replace("rsCSGO.html");
+                    }
+                }
+            });
+        }
+
+
+
         //function SelectGame(gameValue) {
         //    var webMethod = "gamingProject.asmx/SelectGame";
         //    var parameters = { gameName: gameValue };
@@ -108,76 +198,11 @@
         //        }
         //    });
         //}
-
-        // able to select a game and transfer to the ranking system page of the game selected
-        function SelectGame(gameValue) {
-            var webMethod = "gamingProject.asmx/SelectGame";
-            var parameters = { gameNum: gameValue };
-            console.log(parameters);
-
-            var json_data = JSON.stringify(parameters);
-            console.log(json_data);
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-
-                    var responseFromServer = response.d;
-                    console.log(responseFromServer);
-
-                    // transfer to a page -- lol ranking sys
-                    if (responseFromServer == "Added game_Played = 1 into db") {
-                        window.location.replace("#");
-                    }
-
-                    // transfer to a page -- apex ranking sys
-                    else if (responseFromServer == "Added game_Played = 2 into db") {
-                        window.location.replace("#");
-                    }
-
-                    // transfer to a page -- lol ranking sys
-                    else if (responseFromServer == "Added game_Played = 3 into db") {
-                        window.location.replace("#");
-                    }
-                }
-            });
-        }
-
-        function Logout() {
-            var webMethod = "gamingProject.asmx/Logout";
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-
-                    var responseFromServer = response.d;
-
-                    if (responseFromServer == false) {
-                        window.location.replace("home.html");
-                    }
-                    else {
-                        alert("Error: Unable to sign out.");
-                    }
-                },
-                error: function (e) {
-                    alert("Error: Unable to sign out.");
-                }
-            });
-        }
         
     </script>
 </head>
 
-<body>
+<body onload="ViewUser()">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
@@ -190,7 +215,7 @@
             <!--<div class="collapse navbar-collapse" id="navbaritems">-->
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_username_id" href="#"><i class="fa fa-user-circle-o pe-md-2"></i></a>
+                    <a class="nav-link ms-auto" id="nav_username_id" href="#"><i class="fa fa-user-circle-o pe-md-2"></i>USERNAME</a>
                 </li>
 
                 <li class="nav-item">
