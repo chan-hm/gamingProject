@@ -29,50 +29,89 @@
     <title>Select a Game</title>
 
     <script type="text/javascript">
+        //function SelectGame(gameValue) {
+        //    var webMethod = "gamingProject.asmx/SelectGame";
+        //    var parameters = { gameName: gameValue };
+        //    console.log(parameters);
+
+        //    var json_data = JSON.stringify(parameters);
+        //    console.log(json_data);
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        data: json_data,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (array) {
+        //            console.log(array);
+
+        //            var infoArray = array.d;
+        //            console.log(infoArray);
+
+        //            for (var i = 0; i < infoArray.length; i++) {
+        //                if (infoArray[i]["game_name"] == "lol") {
+        //                    //testing
+        //                    // may transfer to a page -- lol ranking sys
+        //                    alert("1: lol");
+        //                }
+        //                else if (infoArray[i]["game_name"] == "apex") {
+        //                    //testing
+        //                     // may transfer to a page -- apex ranking sys
+        //                    alert("2: apex");
+        //                }
+        //                else {
+        //                    //testing
+        //                     // may transfer to a page -- csgo ranking sys
+        //                    alert("3: csgo");
+        //                }
+        //            }    
+        //        }
+        //    });
+        //  //function SelectGame(gameValue) {
+        //    var webMethod = "gamingProject.asmx/SelectGame";
+        //    var parameters = { gameName: gameValue };
+        //    console.log(parameters);
+
+        //    var json_data = JSON.stringify(parameters);
+        //    console.log(json_data);
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        data: json_data,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (array) {
+        //            console.log(array);
+
+        //            var infoArray = array.d;
+        //            console.log(infoArray);
+
+        //            for (var i = 0; i < infoArray.length; i++) {
+        //                if (infoArray[i]["game_name"] == "lol") {
+        //                    //testing
+        //                    // may transfer to a page -- lol ranking sys
+        //                    alert("1: lol");
+        //                }
+        //                else if (infoArray[i]["game_name"] == "apex") {
+        //                    //testing
+        //                     // may transfer to a page -- apex ranking sys
+        //                    alert("2: apex");
+        //                }
+        //                else {
+        //                    //testing
+        //                     // may transfer to a page -- csgo ranking sys
+        //                    alert("3: csgo");
+        //                }
+        //            }    
+        //        }
+        //    });
+        //}
+
+        // able to select a game and transfer to the ranking system page of the game selected
         function SelectGame(gameValue) {
             var webMethod = "gamingProject.asmx/SelectGame";
-            var parameters = { gameName: gameValue };
-            console.log(parameters);
-
-            var json_data = JSON.stringify(parameters);
-            console.log(json_data);
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (array) {
-                    console.log(array);
-
-                    var infoArray = array.d;
-                    console.log(infoArray);
-
-                    for (var i = 0; i < infoArray.length; i++) {
-                        if (infoArray[i]["game_name"] == "lol") {
-                            //testing
-                            // may transfer to a page -- lol ranking sys
-                            alert("1: lol");
-                        }
-                        else if (infoArray[i]["game_name"] == "apex") {
-                            //testing
-                             // may transfer to a page -- apex ranking sys
-                            alert("2: apex");
-                        }
-                        else {
-                            //testing
-                             // may transfer to a page -- csgo ranking sys
-                            alert("3: csgo");
-                        }
-                    }    
-                }
-            });
-        }
-
-
-        function SelectGame2(gameValue) {
-            var webMethod = "gamingProject.asmx/SelectGame2";
             var parameters = { gameNum: gameValue };
             console.log(parameters);
 
@@ -86,28 +125,51 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(repsone);
+                    console.log(response);
 
-                    //var infoArray = array.d;
-                    //console.log(infoArray);
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
 
-                    //for (var i = 0; i < infoArray.length; i++) {
-                    //    if (infoArray[i]["game_name"] == "lol") {
-                    //        //testing
-                    //        // may transfer to a page -- lol ranking sys
-                    //        alert("1: lol");
-                    //    }
-                    //    else if (infoArray[i]["game_name"] == "apex") {
-                    //        //testing
-                    //        // may transfer to a page -- apex ranking sys
-                    //        alert("2: apex");
-                    //    }
-                    //    else {
-                    //        //testing
-                    //        // may transfer to a page -- csgo ranking sys
-                    //        alert("3: csgo");
-                    //    }
-                    //}
+                    // transfer to a page -- lol ranking sys
+                    if (responseFromServer == "Added game_Played = 1 into db") {
+                        window.location.replace("#");
+                    }
+
+                    // transfer to a page -- apex ranking sys
+                    else if (responseFromServer == "Added game_Played = 2 into db") {
+                        window.location.replace("#");
+                    }
+
+                    // transfer to a page -- lol ranking sys
+                    else if (responseFromServer == "Added game_Played = 3 into db") {
+                        window.location.replace("#");
+                    }
+                }
+            });
+        }
+
+        function Logout() {
+            var webMethod = "gamingProject.asmx/Logout";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+
+                    var responseFromServer = response.d;
+
+                    if (responseFromServer == false) {
+                        window.location.replace("home.html");
+                    }
+                    else {
+                        alert("Error: Unable to sign out.");
+                    }
+                },
+                error: function (e) {
+                    alert("Error: Unable to sign out.");
                 }
             });
         }
@@ -132,7 +194,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_logout_id" href="#">Sign Out</a>
+                    <a class="nav-link ms-auto" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
                 </li>
             </ul>
             <!--</div>-->
@@ -153,7 +215,7 @@
                     <h5 class="card-title text-center">League of Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="1" id="game_lol_id" onclick="SelectGame2(this.value)">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="1" id="game_lol_id" onclick="SelectGame(this.value)">Select</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +229,7 @@
                     <h5 class="card-title text-center">Apex Legends</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="2" id="game_apex_id" onclick="SelectGame2(this.value)">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="2" id="game_apex_id" onclick="SelectGame(this.value)">Select</button>
                     </div>
                 </div>
             </div>
@@ -181,7 +243,7 @@
                     <h5 class="card-title text-center">CS GO</h5>
 
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-md" value="3" id="game_csgo_id" onclick="SelectGame2(this.value)">Select</button>
+                        <button type="button" class="btn btn-primary btn-md" value="3" id="game_csgo_id" onclick="SelectGame(this.value)">Select</button>
                     </div>
                 </div>
             </div>

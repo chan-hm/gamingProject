@@ -130,44 +130,58 @@ namespace gamingProject
                 Session["username"] = sqlDt.Rows[0]["username"];
                 Session["email"] = sqlDt.Rows[0]["email"];
                 Session["password"] = sqlDt.Rows[0]["password"];
+                Session["game_played"] = sqlDt.Rows[0]["game_played"];
+                Session["rank_tier"] = sqlDt.Rows[0]["rank_tier"];
+                Session["rank_division"] = sqlDt.Rows[0]["rank_division"];
 
                 success = true;
             }
             return success;
         }
 
-        // list the gamename_id & game_name the user selects
-        [WebMethod]
-        public Games[] SelectGame(string gameName)
+        // able to log out to the account
+        [WebMethod(EnableSession = true)]
+        public bool Logout()
         {
-            DataTable sqlDt = new DataTable("Games");
-
-            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM pj2.gamesname WHERE game_name = @gameNameValue";
-
-            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
-            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-            sqlCommand.Parameters.AddWithValue("@gameNameValue", HttpUtility.UrlDecode(gameName));
-
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            sqlDa.Fill(sqlDt);
-
-            List<Games> game = new List<Games>();
-            for (int i = 0; i < sqlDt.Rows.Count; i++)
-            {
-                game.Add(new Games
-                {
-                    name_id = Convert.ToInt32(sqlDt.Rows[i]["name_id"]),
-                    game_name = sqlDt.Rows[i]["game_name"].ToString(),
-                });
-            }
-            return game.ToArray();
+            bool success = false;
+            Session.Abandon();
+           
+            return success;
         }
+
+
+        //// list the gamename_id & game_name the user selects
+        //[WebMethod]
+        //public Games[] SelectGame(string gameName)
+        //{
+        //    DataTable sqlDt = new DataTable("Games");
+
+        //    string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+        //    string sqlSelect = "SELECT * FROM pj2.gamesname WHERE game_name = @gameNameValue";
+
+        //    MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+        //    MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+        //    sqlCommand.Parameters.AddWithValue("@gameNameValue", HttpUtility.UrlDecode(gameName));
+
+        //    MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+        //    sqlDa.Fill(sqlDt);
+
+        //    List<Games> game = new List<Games>();
+        //    for (int i = 0; i < sqlDt.Rows.Count; i++)
+        //    {
+        //        game.Add(new Games
+        //        {
+        //            name_id = Convert.ToInt32(sqlDt.Rows[i]["name_id"]),
+        //            game_name = sqlDt.Rows[i]["game_name"].ToString(),
+        //        });
+        //    }
+        //    return game.ToArray();
+        //}
 
         // save the gamename_id the users select to db
         [WebMethod(EnableSession = true)]
-        public string SelectGame2(int gameNum)
+        public string SelectGame(int gameNum)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
 
@@ -177,7 +191,6 @@ namespace gamingProject
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
-            // !!!!!!!!!! gamePlayedValue is an int, gameName is a str
             sqlCommand.Parameters.AddWithValue("@gamePlayedValue", Convert.ToInt32(gameNum));
 
             sqlConnection.Open();
@@ -185,7 +198,7 @@ namespace gamingProject
             try
             {
                 sqlCommand.ExecuteNonQuery();
-                return "Added game_Played into db";
+                return "Added game_Played = " + gameNum + " into db";
             }
 
             catch (Exception e)
