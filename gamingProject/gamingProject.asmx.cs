@@ -178,8 +178,7 @@ namespace gamingProject
                 var e_str = e.ToString();
                 return e_str;
             }
-            sqlConnection.Close();
-          
+            sqlConnection.Close();         
         }
 
 
