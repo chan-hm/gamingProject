@@ -78,6 +78,18 @@
             });
         }
 
+        // change the class of the selected li to active
+        $(document).ready(function () {
+            $('.list-group li').click(function () {          
+                $(this).addClass('active');
+                $(this).siblings().removeClass('active');
+            });
+        });
+
+
+
+       
+
     </script>
 </head>
 
@@ -116,41 +128,43 @@
             <div class="col-md-4 form-group pt-md-2">
                 <div class="container-md mb-md-4">
                     <label for="inputTier">Tier</label>
-                    <div class="list-group text-left">
-                        <button type="button" class="list-group-item list-group-item-action" value="Diamond"><img src="diamond_logo.png" width="60" height="70"> Diamond</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Platinum"><img src="platinum_logo.png" width="60" height="70"> Platinum</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Gold"><img src="gold_logo.png" width="60" height="70"> Gold</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Silver"><img src="silver_logo.png" width="60" height="70"> Silver</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Bronze"><img src="bronze_logo.png" width="60" height="70"> Bronze</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Iron"><img src="iron_logo.png" width="60" height="70"> Iron</button>
-                    </div>
+                    <ul class="list-group text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Diamond"><img src="diamond_logo.png" width="60" height="70"> Diamond</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Platinum"><img src="platinum_logo.png" width="60" height="70"> Platinum</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold"><img src="gold_logo.png" width="60" height="70"> Gold</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver"><img src="silver_logo.png" width="60" height="70"> Silver</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Bronze"><img src="bronze_logo.png" width="60" height="70"> Bronze</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Iron"><img src="iron_logo.png" width="60" height="70"> Iron</li>
+                    </ul>
 
                     <label for="inputDivision" class="pt-md-3">Divison</label>
-                    <div class="list-group list-group-horizontal-md">
-                        <button type="button" class="list-group-item list-group-item-action" value="I">I</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="II">II</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="III">III</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="IV">IV</button>
-                    </div>
+                    <ul class="list-group list-group-horizontal-md">
+                        <li type="button" class="list-group-item list-group-item-action" value="I">I</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="II">II</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="III">III</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="IV">IV</li>
+                    </ul>
 
 
 
-                    <!--<label for="inputRole" class="pt-md-3">Role</label>
-                    <div class="list-group text-left">
-                        <button type="button" class="list-group-item list-group-item-action" value="Top"><img src="top_logo.png" width="40" height="40"> Top</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Jungle"><img src="jg_logo.png" width="40" height="40"> Jungle</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Middle"><img src="mid_logo.png" width="40" height="40"> Middle</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Bottom"><img src="bot_logo.png" width="40" height="40"> Bottom</button>
-                        <button type="button" class="list-group-item list-group-item-action" value="Support"><img src="sup_logo.png" width="40" height="40"> Support</button>
-                    </div>-->
+                    <label for="inputRole" class="pt-md-3">Role</label>
+                    <ul class="list-group text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Top"><img src="top_logo.png" width="40" height="40"> Top</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Jungle"><img src="jg_logo.png" width="40" height="40"> Jungle</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Middle"><img src="mid_logo.png" width="40" height="40"> Middle</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Bottom"><img src="bot_logo.png" width="40" height="40"> Bottom</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Support"><img src="sup_logo.png" width="40" height="40"> Support</li>
+                    </ul>
 
                 </div>
 
+            </div>
+
             <div class="col-md-2"></div>
 
-         
+
             <div class="col-md-4 form-group pt-md-2">
-                <label for="inputRole">Role</label>
+                <!--<label for="inputRole">Role</label>
 
                 <div class="container-md mb-md-4">
                     <div class="list-group my-md-5">
@@ -160,11 +174,12 @@
                         <button type="button" class="list-group-item list-group-item-action" value="Bottom"><img src="bot_logo.png" width="40" height="40"> Bottom</button>
                         <button type="button" class="list-group-item list-group-item-action" value="Support"><img src="sup_logo.png" width="40" height="40"> Support</button>
                     </div>
-                </div>
+                </div>-->
             </div>
 
             <div class="col-md-1"></div>
         </div>
+       
 
         <!--Submit button-->
         <div class="row  mx-md-0">

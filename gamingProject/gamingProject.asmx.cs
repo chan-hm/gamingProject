@@ -181,7 +181,37 @@ namespace gamingProject
             sqlConnection.Close();         
         }
 
+        // allows users to select their rank tier and save it into the db
+        [WebMethod(EnableSession = true)]
+        public string SubmitRankInfo(string tier, string division, string role)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
 
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@rankTierValue), `rank_division` = (@rankDivisionValue), `role` = (@roleValue) WHERE(`user_id` = " + user_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@rankTierValue", HttpUtility.UrlDecode(tier));
+            sqlCommand.Parameters.AddWithValue("@rankDivisionValue", HttpUtility.UrlDecode(division));
+            sqlCommand.Parameters.AddWithValue("@roleValue", HttpUtility.UrlDecode(role));
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return "Tier, division, and role are saved";
+            }
+
+            catch (Exception e)
+            {
+                var e_str = e.ToString();
+                return e_str;
+            }
+            sqlConnection.Close();
+        }
 
 
 
