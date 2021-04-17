@@ -181,20 +181,34 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
-        public class BlankInputException: Exception
-        {
+        //public class BlankInputException: Exception
+        //{
+        //    //public BlankInputException()
+        //    //{
+                
+        //    //}
 
-        }
+        //if (tier == "" || division == "" || role == "")
+                //{
+                //    throw new BlankInputException();
+                //}
+
+                //else
+                //{   
+                //    sqlCommand.ExecuteNonQuery();
+                //    return "Tier, division, and role are saved";
+                //}
+        //}
 
 
-        // allows users to select their rank tier and save it into the db
+        // allows users to select their rank tier and save it into the db [LOL] 
         [WebMethod(EnableSession = true)]
         public string SubmitRankInfo(string tier, string division, string role)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@), `rank_division` = (@rankDivisionValue), `role` = (@roleValue) WHERE(`user_id` = " + user_id + ");";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@rankTierValue), `rank_division` = (@rankDivisionValue), `role` = (@roleValue) WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -205,16 +219,11 @@ namespace gamingProject
 
             sqlConnection.Open();
 
-            if (tier == "" || division == "" || role == "")
-            {
-                
-            }
-
-
             try
-            {
+            {        
                 sqlCommand.ExecuteNonQuery();
                 return "Tier, division, and role are saved";
+
             }
 
             catch (Exception e)

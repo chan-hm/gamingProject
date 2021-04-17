@@ -80,25 +80,28 @@
 
         // change the class of the selected li to active
         $(document).ready(function () {
-            $(".list-group li").click(function () {          
+
+            var selections = document.getElementsByClassName("active");
+
+            $(".list-group li").click(function () {
                 $(this).addClass("active");
                 $(this).siblings().removeClass("active");
+            });
 
-                var selections = document.getElementsByClassName("active");
-                var rank_tier = selections[0].innerText;
-                var rank_division = selections[1].innerText;
-                var rank_role = selections[2].innerText;
+            // press submit to save all info to db
+            $("#submit_btn_id").click(function () {
+                try {
+                    var rank_tier = selections[0].innerText.trim();
+                    var rank_division = selections[1].innerText.trim();
+                    var rank_role = selections[2].innerText.trim();
+                    //console.log(rank_tier, rank_division, rank_role);
 
-                console.log(rank_tier, rank_division, rank_role);
-
-                // press submit to save all info to db
-                $("#submit_btn_id").click(function () {
                     var webMethod = "gamingProject.asmx/SubmitRankInfo";
                     var parameters = { tier: rank_tier, division: rank_division, role: rank_role };
-                    console.log(parameters);
+                    //console.log(parameters);
 
                     var json_data = JSON.stringify(parameters);
-                    console.log(json_data);
+                    //console.log(json_data);
 
                     $.ajax({
                         type: "POST",
@@ -107,10 +110,10 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (response) {
-                            console.log(response);
+                            //console.log(response);
 
                             var responseFromServer = response.d;
-                            console.log(responseFromServer);
+                            //console.log(responseFromServer);
 
                             if (responseFromServer == "Tier, division, and role are saved") {
                                 alert("All saved.");
@@ -121,8 +124,13 @@
                             }
                         }
                     });
-                });   
-            });
+                }
+
+                // if the user does not select a tier/ divison/ role, nothing will be saved to the db
+                catch (error) {
+                    alert("Please select your rank tier and division, and the role that you play.");
+                }
+            });    
         });
 
      
