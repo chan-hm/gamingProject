@@ -80,12 +80,52 @@
 
         // change the class of the selected li to active
         $(document).ready(function () {
-            $('.list-group li').click(function () {          
-                $(this).addClass('active');
-                $(this).siblings().removeClass('active');
+            $(".list-group li").click(function () {          
+                $(this).addClass("active");
+                $(this).siblings().removeClass("active");
+
+                var selections = document.getElementsByClassName("active");
+                var rank_tier = selections[0].innerText;
+                var rank_division = selections[1].innerText;
+                var rank_role = selections[2].innerText;
+
+                console.log(rank_tier, rank_division, rank_role);
+
+                // press submit to save all info to db
+                $("#submit_btn_id").click(function () {
+                    var webMethod = "gamingProject.asmx/SubmitRankInfo";
+                    var parameters = { tier: rank_tier, division: rank_division, role: rank_role };
+                    console.log(parameters);
+
+                    var json_data = JSON.stringify(parameters);
+                    console.log(json_data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: webMethod,
+                        data: json_data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+
+                            var responseFromServer = response.d;
+                            console.log(responseFromServer);
+
+                            if (responseFromServer == "Tier, division, and role are saved") {
+                                alert("All saved.");
+                                // go to account info page
+                            }
+                            else {
+                                alert("Please select a tier, divison, and role.");
+                            }
+                        }
+                    });
+                });   
             });
         });
 
+     
 
 
        
@@ -123,9 +163,9 @@
     <form>
         <!--Rank tier, divison & role-->
         <div class="row p-md-5 mx-md-0">
-            <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
 
-            <div class="col-md-4 form-group pt-md-2">
+            <div class="col-md-6 form-group pt-md-2">
                 <div class="container-md mb-md-4">
                     <label for="inputTier">Tier</label>
                     <ul class="list-group text-left">
@@ -160,10 +200,10 @@
 
             </div>
 
-            <div class="col-md-2"></div>
+            <!--<div class="col-md-2"></div>-->
 
 
-            <div class="col-md-4 form-group pt-md-2">
+            <!--<div class="col-md-4 form-group pt-md-2">-->
                 <!--<label for="inputRole">Role</label>
 
                 <div class="container-md mb-md-4">
@@ -175,9 +215,9 @@
                         <button type="button" class="list-group-item list-group-item-action" value="Support"><img src="sup_logo.png" width="40" height="40"> Support</button>
                     </div>
                 </div>-->
-            </div>
+            <!--</div>-->
 
-            <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
         </div>
        
 
@@ -186,7 +226,7 @@
             <div class="col-md-5"></div>
 
             <div class="col-md-2 px-md-4 mx-md-5">
-                <button type="button" class="btn btn-primary btn-lg" id="submit_btn_id" onclick="3">Submit</button>
+                <button type="button" class="btn btn-primary btn-lg" id="submit_btn_id">Submit</button>
             </div>
 
             <div class="col-md-5"></div>

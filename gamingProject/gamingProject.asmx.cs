@@ -53,9 +53,9 @@ namespace gamingProject
                     var e_str = e.ToString();
 
                     if (e_str.Contains("username_UNIQUE"))
-                        {
-                            return "The username you entered is already in use.";
-                        }
+                    {
+                        return "The username you entered is already in use.";
+                    }
                     else if (e_str.Contains("email_UNIQUE"))
                     {
                         return "The email address you entered is already in use.";
@@ -116,7 +116,7 @@ namespace gamingProject
         {
             bool success = false;
             Session.Abandon();
-           
+
             return success;
         }
 
@@ -178,8 +178,14 @@ namespace gamingProject
                 var e_str = e.ToString();
                 return e_str;
             }
-            sqlConnection.Close();         
+            sqlConnection.Close();
         }
+
+        public class BlankInputException: Exception
+        {
+
+        }
+
 
         // allows users to select their rank tier and save it into the db
         [WebMethod(EnableSession = true)]
@@ -188,7 +194,7 @@ namespace gamingProject
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@rankTierValue), `rank_division` = (@rankDivisionValue), `role` = (@roleValue) WHERE(`user_id` = " + user_id + ");";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@), `rank_division` = (@rankDivisionValue), `role` = (@roleValue) WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -198,6 +204,12 @@ namespace gamingProject
             sqlCommand.Parameters.AddWithValue("@roleValue", HttpUtility.UrlDecode(role));
 
             sqlConnection.Open();
+
+            if (tier == "" || division == "" || role == "")
+            {
+                
+            }
+
 
             try
             {
