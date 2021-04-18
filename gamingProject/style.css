@@ -142,3 +142,11 @@
 .card-title {
     color: black;
 }
+
+/*Apex ranking system & CSGO ranking system*/
+#champion_rows_id, #rank_rows_id {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1vh;
+}
+

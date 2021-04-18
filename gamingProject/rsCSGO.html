@@ -78,6 +78,59 @@
             });
         }
 
+        // change the class of the selected li to active
+        $(document).ready(function () {
+
+            var selection = document.getElementsByClassName("active");
+
+            $(".list-group li").click(function () {
+                $(this).addClass("active");
+                $(this).siblings().removeClass("active");
+            });
+
+            // press submit to save all info to db
+            $("#submit_btn_id").click(function () {
+                try {
+                    var cs_rank = selection[0].innerText.trim();  
+                    console.log(cs_rank);
+
+                    var webMethod = "gamingProject.asmx/SubmitRank";
+                    var parameters = { rank: cs_rank };
+                    console.log(parameters);
+
+                    var json_data = JSON.stringify(parameters);
+                    console.log(json_data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: webMethod,
+                        data: json_data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            //console.log(response);
+
+                            var responseFromServer = response.d;
+                            //console.log(responseFromServer);
+
+                            if (responseFromServer == "Rank is saved") {
+                                alert("All saved.");
+                                // go to account info page
+                            }
+                            else {
+                                alert("Please select a tier, divison, and role.");
+                            }
+                        }
+                    });
+                }
+
+                // if the user does not select a rank, nothing will be saved to the db
+                catch (error) {
+                    alert("Please select your current rank.");
+                }
+            });
+        });
+
     </script>
 </head>
 
@@ -106,6 +159,61 @@
         </div>
     </nav>
 
+    <h1 class="text-center pt-md-2">Select your current rank</h1>
+
+    <form>
+        <!--Rank tier, divison & role-->
+        <div class="row pt-md-5 mx-md-0">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10 form-group pt-md-2">
+                <div class="container-md mb-md-4">
+                    <label for="inputRank">Rank</label>  
+                    <ul class="list-group list-group-horizontal-md text-left" id="rank_rows_id">
+                        <!--1st row-->
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver I"><img src="s1_logo.png" width="90" height="50"> Silver I</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver II"><img src="s2_logo.png" width="90" height="50"> Silver II</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver III"><img src="s3_logo.png" width="90" height="50"> Silver III</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver IV"><img src="s4_logo.png" width="90" height="50"> Silver IV</li>
+
+                        <!--2nd row-->
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver Elite"><img src="se_logo.png" width="90" height="50"> Silver Elite</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver Elite Master"><img src="sem_logo.png" width="90" height="50"> Silver Elite Master</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold Nova I"><img src="gn1_logo.png" width="90" height="50"> Gold Nova I</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold Nova II"><img src="gn2_logo.png" width="90" height="50"> Gold Nova II</li>
+                       
+                        <!--3rd row-->
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold Nova III"><img src="gn3_logo.png" width="90" height="50"> Gold Nova III</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold Nova Master"><img src="gnm_logo.png" width="90" height="50"> Gold Nova Master</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Master Guardian I"><img src="mg1_logo.png" width="90" height="50"> Master Guardian I</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Master Guardian II"><img src="mg2_logo.png" width="90" height="50"> Master Guardian II</li>
+
+                        <!--4th row-->
+                        <li type="button" class="list-group-item list-group-item-action" value="Master Guardian Elite"><img src="mge_logo.png" width="90" height="50"> Master Guardian Elite</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Distinguished Master Guardian"><img src="dmg_logo.png" width="90" height="50"> Distinguished Master Guardian</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Legendary Elite"><img src="le_logo.png" width="90" height="50"> Legendary Elite</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Legendary Elite Master"><img src="lem_logo.png" width="90" height="50"> Legendary Elite Master</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+        </div>
+
+        <!--Submit button-->
+        <div class="row  mx-md-0">
+            <div class="col-md-5"></div>
+
+            <div class="col-md-2 px-md-4 mx-md-5 pb-md-4">
+                <button type="button" class="btn btn-primary btn-lg" id="submit_btn_id">Submit</button>
+            </div>
+
+            <div class="col-md-5"></div>
+
+        </div>
+
+    </form>
 
 
 

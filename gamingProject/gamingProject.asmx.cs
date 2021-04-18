@@ -201,7 +201,7 @@ namespace gamingProject
         //}
 
 
-        // allows users to select their rank tier and save it into the db [LOL] 
+        // allows users to select their rank tier and save it into the db [LOL & APEX] 
         [WebMethod(EnableSession = true)]
         public string SubmitRankInfo(string tier, string division, string role)
         {
@@ -223,6 +223,37 @@ namespace gamingProject
             {        
                 sqlCommand.ExecuteNonQuery();
                 return "Tier, division, and role are saved";
+
+            }
+
+            catch (Exception e)
+            {
+                var e_str = e.ToString();
+                return e_str;
+            }
+            sqlConnection.Close();
+        }
+
+        // allows users to select their rank tier and save it into the db [CSGO] 
+        [WebMethod(EnableSession = true)]
+        public string SubmitRank(string rank)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`users` SET `rank_tier` = (@rankTierValue), `rank_division` = NULL, `role` = NULL WHERE(`user_id` = " + user_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@rankTierValue", HttpUtility.UrlDecode(rank));
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return "Rank is saved";
 
             }
 
