@@ -78,6 +78,60 @@
             });
         }
 
+        // change the class of the selected li to active
+        $(document).ready(function () {
+
+            var selections = document.getElementsByClassName("active");
+
+            $(".list-group li").click(function () {
+                $(this).addClass("active");
+                $(this).siblings().removeClass("active");
+            });
+
+            // press submit to save all info to db
+            $("#submit_btn_id").click(function () {
+                try {
+                    var rank_tier = selections[0].innerText.trim();
+                    var rank_division = selections[1].innerText.trim();
+                    var rank_role = selections[2].innerText.trim();
+                    //console.log(rank_tier, rank_division, rank_role);
+
+                    var webMethod = "gamingProject.asmx/SubmitRankInfo";
+                    var parameters = { tier: rank_tier, division: rank_division, role: rank_role };
+                    //console.log(parameters);
+
+                    var json_data = JSON.stringify(parameters);
+                    //console.log(json_data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: webMethod,
+                        data: json_data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            //console.log(response);
+
+                            var responseFromServer = response.d;
+                            //console.log(responseFromServer);
+
+                            if (responseFromServer == "Tier, division, and role are saved") {
+                                alert("All saved.");
+                                // go to account info page
+                            }
+                            else {
+                                alert("Please select a tier, divison, and role.");
+                            }
+                        }
+                    });
+                }
+
+                // if the user does not select a tier/ divison/ role, nothing will be saved to the db
+                catch (error) {
+                    alert("Please select your rank tier and division, and the role that you play.");
+                }
+            });
+        });
     </script>
 </head>
 
@@ -106,7 +160,79 @@
         </div>
     </nav>
 
+    <h1 class="text-center pt-md-2">Select your current rank</h1>
 
+    <form>
+        <!--Rank tier, divison & role-->
+        <div class="row pt-md-5 mx-md-0">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10 form-group pt-md-2">
+                <div class="container-md mb-md-4">
+                    <label for="inputTier">Tier</label>
+                    <ul class="list-group text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Diamond"><img src="diamond_logo_apex.jpg" width="60" height="60"> Diamond</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Platinum"><img src="platinum_logo_apex.jpg" width="60" height="60"> Platinum</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gold"><img src="gold_logo_apex.jpg" width="60" height="60"> Gold</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Silver"><img src="silver_logo_apex.jpg" width="60" height="60"> Silver</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Bronze"><img src="bronze_logo_apex.jpg" width="60" height="60"> Bronze</li>
+                    </ul>
+
+                    <label for="inputDivision" class="pt-md-3">Divison</label>
+                    <ul class="list-group list-group-horizontal-md">
+                        <li type="button" class="list-group-item list-group-item-action" value="I">I</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="II">II</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="III">III</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="IV">IV</li>
+                    </ul>
+
+                    <label for="inputRole" class="pt-md-3">Champion</label>
+                    <ul class="list-group list-group-horizontal-md text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Bangalore"><img src="Bangalore_logo.jpg" width="120" height="80"> Bangalore</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Bloodhound"><img src="Bloodhound_logo.jpg" width="120" height="80"> Bloodhound</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Caustic"><img src="Caustic_logo.jpeg" width="120" height="80"> Caustic</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Crypto"><img src="Crypto_logo.jpg" width="120" height="80"> Crypto</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal-md text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Fuse"><img src="Fuse_logo.jfif" width="120" height="80"> Fuse</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Gibraltar"><img src="Gibraltar_logo.jpg" width="120" height="80"> Gibraltar</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Horizon"><img src="Horizon_logo.jpg" width="120" height="80"> Horizon</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Lifeline"><img src="Lifeline_logo.jpg" width="120" height="80"> Lifeline</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal-md text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Loba"><img src="Loba_logo.jpg" width="120" height="80"> Loba</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Mirage"><img src="Mirage_logo.jpg" width="120" height="80"> Mirage</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Octane"><img src="Octane_logo.jfif" width="120" height="80"> Octane</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Pathfinder"><img src="Pathfinder_logo.jpg" width="120" height="80"> Pathfinder</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal-md text-left">
+                        <li type="button" class="list-group-item list-group-item-action" value="Rampart"><img src="Rampart_logo.jpg" width="120" height="80"> Rampart</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Revenant"><img src="Revenant_logo.jpg" width="120" height="80"> Revenant</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Wattson"><img src="Wattson_logo.jfif" width="120" height="80"> Wattson</li>
+                        <li type="button" class="list-group-item list-group-item-action" value="Wraith"><img src="Wraith_logo.jpg" width="120" height="80"> Wraith</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-1"></div>
+        </div>
+
+
+        <!--Submit button-->
+        <div class="row  mx-md-0">
+            <div class="col-md-5"></div>
+
+            <div class="col-md-2 px-md-4 mx-md-5 pb-md-4">
+                <button type="button" class="btn btn-primary btn-lg" id="submit_btn_id">Submit</button>
+            </div>
+
+            <div class="col-md-5"></div>
+
+        </div>
+
+    </form>
 
 
 
