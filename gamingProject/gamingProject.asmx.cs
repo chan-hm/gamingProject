@@ -181,26 +181,6 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
-        //public class BlankInputException: Exception
-        //{
-        //    //public BlankInputException()
-        //    //{
-                
-        //    //}
-
-        //if (tier == "" || division == "" || role == "")
-                //{
-                //    throw new BlankInputException();
-                //}
-
-                //else
-                //{   
-                //    sqlCommand.ExecuteNonQuery();
-                //    return "Tier, division, and role are saved";
-                //}
-        //}
-
-
         // allows users to select their rank tier and save it into the db [LOL & APEX] 
         [WebMethod(EnableSession = true)]
         public string SubmitRankInfo(string tier, string division, string role)
@@ -265,7 +245,36 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
+        // check whether the user has selected a game or not 
+        [WebMethod(EnableSession = true)]
+        public Users[] CheckNullGameUsers()
+        {
+            var username = Session["username"];
 
+            DataTable sqlDt = new DataTable("Users");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played is NULL AND username = '" + username + "';";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Users> user = new List<Users>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                user.Add(new Users
+                {
+                    user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
+                    username = sqlDt.Rows[i]["username"].ToString(),
+                    email = sqlDt.Rows[i]["email"].ToString(),
+                    password = sqlDt.Rows[i]["password"].ToString(),
+                });
+            }
+            return user.ToArray();
+        }
 
 
 

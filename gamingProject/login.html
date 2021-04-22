@@ -33,10 +33,10 @@
         function Login() {
             var webMethod = "gamingProject.asmx/Login";
             var parameters = { username: $('#username_id').val(), password: $('#password_id').val() };
-            console.log(parameters);
+            //console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
+            //console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -45,12 +45,35 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     var responseFromServer = response.d;
-                    console.log(responseFromServer);
+                    //console.log(responseFromServer);
 
                     if (responseFromServer == true) {
-                        window.location.replace("viewGames.html");
+                        var webMethod = "gamingProject.asmx/CheckNullGameUsers";
+
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (array) {
+                                console.log(array);
+
+                                var infoArray = array.d;
+                                console.log(infoArray);
+
+                                if (infoArray.length == 1) {
+                                    window.location.replace("viewGames.html");
+                                }
+                                else {
+                                    window.location.replace("editAccount.html");
+                                }
+                            }
+                        });
+
+                      
+                        //window.location.replace("viewGames.html");
                     }
                     else {
                         alert("The email address or password you entered is invalid.");

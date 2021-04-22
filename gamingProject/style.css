@@ -150,3 +150,11 @@
     grid-gap: 1vh;
 }
 
+./*dropdown {
+    padding-left: 0;*/
+    /*margin-left: 0;*/
+/*}*/
+
+.bi .bi-eye-fill {
+    color: black;
+}
