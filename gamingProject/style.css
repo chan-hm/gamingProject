@@ -150,11 +150,10 @@
     grid-gap: 1vh;
 }
 
-./*dropdown {
-    padding-left: 0;*/
-    /*margin-left: 0;*/
-/*}*/
-
-.bi .bi-eye-fill {
+/*Edit account*/
+#eye_fill_id {
     color: black;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 15vh;
 }
