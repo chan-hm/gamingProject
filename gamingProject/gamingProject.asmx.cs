@@ -276,6 +276,38 @@ namespace gamingProject
             return user.ToArray();
         }
 
+        // allows users to change their account info
+        [WebMethod(EnableSession = true)]
+        public string SaveInfo(string username, string email, string password)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`users` SET `username` = (@usernameValue), `email` = (@emailValue), `password` = (@passwordValue) WHERE(`user_id` = " + user_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
+            sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
+            sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return "Updated info";
+
+            }
+
+            catch (Exception e)
+            {
+                var e_str = e.ToString();
+                return e_str;
+            }
+            sqlConnection.Close();
+        }
 
 
 

@@ -87,18 +87,8 @@
             });
         }
 
-        function showPassword() {
-            var starred_password = document.getElementById("password_id");
-            if (starred_password.type === "password") {
-                starred_password.type = "text";
-            } else {
-                starred_password.type = "password";
-            }
-        }
-
-
+        // allow users to show/ hide password
         $(document).ready(function () {
-
             $("#eye_fill_id").click(function () {
                 var starred_password = document.getElementById("password_id");
                 if (starred_password.type === "password") {
@@ -109,6 +99,45 @@
                 }
             });
         });
+
+        // allow users to view &/ update account info
+        function SaveButton() {
+            var webMethod = "gamingProject.asmx/SaveInfo";
+            var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val() };
+            console.log(parameters);
+
+            var json_data = JSON.stringify(parameters);
+            console.log(json_data);
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: json_data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
+
+                    //// transfer to a page -- lol ranking sys
+                    //if (responseFromServer == "Added game_Played = 1 into db") {
+                    //    window.location.replace("rsLOL.html");
+                    //}
+
+                    //// transfer to a page -- apex ranking sys
+                    //else if (responseFromServer == "Added game_Played = 2 into db") {
+                    //    window.location.replace("rsAPEX.html");
+                    //}
+
+                    //// transfer to a page -- lol ranking sys
+                    //else if (responseFromServer == "Added game_Played = 3 into db") {
+                    //    window.location.replace("rsCSGO.html");
+                    //}
+                }
+            });
+        }
 
     </script>
 </head>
@@ -151,7 +180,7 @@
             <label for="inputUsername" class="col-md-4 col-form-label">Username: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="username_id">
+                <input type="email" class="form-control me-md-2 w-75" id="username_id" required>
             </div>
         </div>
 
@@ -160,7 +189,7 @@
             <label for="inputEmail" class="col-md-4 col-form-label">Email: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="email_id">
+                <input type="email" class="form-control me-md-2 w-75" id="email_id" required>
             </div>
         </div>
 
@@ -170,20 +199,20 @@
 
             <div class="col-md-6" id="passwordContainer_id">
                 <i class="bi bi-eye-fill" id="eye_fill_id"></i>
-                <input type="password" class="form-control me-md-2 w-75" id="password_id">
+                <input type="password" class="form-control me-md-2 w-75" id="password_id" required>
 
             </div>
         </div>
 
         <div class="row-50 mt-md-3">
-            <button type="button" class="btn btn-primary btn-md" id="save_btn_id" onclick="javascript: SaveInfo();">Save</button>
+            <button type="button" class="btn btn-primary btn-md" id="save_btn_id" onclick="javascript: SaveButton();">Save</button>
         </div>
 
         <hr class="form_hr">
         <br>
         <p class="or">OR</p>
         <br>
-        <p class="pb-md-4">Want to select a new game? <a href="viewGames.html">Go</a></p>
+        <p class="pb-md-4">Want to select a new game? <a href="viewGames.html">Click here</a></p>
 
         <!--<div class="row">
         <div class="col-md-2 col-form-label"></div>
