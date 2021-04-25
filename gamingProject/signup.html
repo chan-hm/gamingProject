@@ -31,63 +31,83 @@
     <script type="text/javascript">
         // using CreateAccount WebMethod
         function SignUp() {
-            var webMethod = "gamingProject.asmx/CreateAccount";
-            var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), re_enter: $('#reenter_id').val() };
-            //console.log(parameters);
+            var username_input = $('#username_id').val();
+            var email_input = $('#email_id').val();
+            var password_input = $('#password_id').val();
+            var re_enter_input = $('#reenter_id').val();
 
-            var json_data = JSON.stringify(parameters);
-            //console.log(json_data);
+            var email_pattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9._%+-]+\.)+[a-zA-Z]{2,}$/;
 
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    var responseFromServer = response.d;
-                    //console.log(responseFromServer);
+            // all inputs are required
+            if (username_input == "" || email_input == "" || password_input == "" || re_enter_input == "") {
+                alert("Please fill in all fields.")
+            }
 
-                    $('#username_id').css("border-color", "transparent");
-                    $('#email_id').css("border-color", "transparent");
-                    $('#password_id').css("border-color", "transparent");
-                    $('#reenter_id').css("border-color", "transparent");
+            // email address has to be in the right format listed above
+            else if (!email_pattern.test(email_input)) {
+                alert("Invalid email address.");
+                $('#email_id').focus();
+            }
 
-                    /*document.getElementById("signup_btn_id").disabled = false;*/
+            else {
+                var webMethod = "gamingProject.asmx/CreateAccount";
+                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), re_enter: $('#reenter_id').val() };
+                //console.log(parameters);
 
-                    if (responseFromServer == "Account Created.") {
-                        alert("Your account has been created. Please Sign in.");
-                        window.location.replace("login.html");
+                var json_data = JSON.stringify(parameters);
+                //console.log(json_data);
+
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    data: json_data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        var responseFromServer = response.d;
+                        //console.log(responseFromServer);
+
+                        $('#username_id').css("border-color", "transparent");
+                        $('#email_id').css("border-color", "transparent");
+                        $('#password_id').css("border-color", "transparent");
+                        $('#reenter_id').css("border-color", "transparent");
+
+                        /*document.getElementById("signup_btn_id").disabled = false;*/
+
+                        if (responseFromServer == "Account Created.") {
+                            alert("Your account has been created. Please Sign in.");
+                            window.location.replace("login.html");
+                        }
+                        else if (responseFromServer == "The username you entered is already in use.") {
+                            $('#username_id').focus();
+                            $('#username_id').css("border-color", "red");
+
+                            alert("The username you entered is already in use.");
+                        }
+                        else if (responseFromServer == "The email address you entered is already in use.") {
+                            $('#email_id').focus();
+                            $('#email_id').css("border-color", "red");
+
+                            alert("The email address you entered is already in use.");
+                        }
+                        else if (responseFromServer == "The passwords do not match.") {
+                            $('#password_id').focus();
+                            $('#password_id').css("border-color", "red");
+
+                            $('#reenter_id').focus();
+                            $('#reenter_id').css("border-color", "red");
+
+                            alert(responseFromServer);
+                        }
+                    },
+                    error: function (e) {
+                        var responseFromServer = e.d;
+                        alert(responseFromServer);
+                        $('#signup_btn_id').prop('disabled', function (i, v) { return !v; });
                     }
-                    else if (responseFromServer == "The username you entered is already in use.") {     
-                        $('#username_id').focus();
-                        $('#username_id').css("border-color", "red");
-
-                        alert("The username you entered is already in use.");
-                    }
-                    else if (responseFromServer == "The email address you entered is already in use.") {
-                        $('#email_id').focus();
-                        $('#email_id').css("border-color", "red");
-
-                        alert("The email address you entered is already in use.");
-                    }    
-                    else if (responseFromServer == "The passwords do not match.") {                        
-                        $('#password_id').focus();
-                        $('#password_id').css("border-color", "red");
-
-                        $('#reenter_id').focus();
-                        $('#reenter_id').css("border-color", "red");
-
-                        alert(responseFromServer);  
-                    }
-                },
-                error: function (e) {
-                    var responseFromServer = e.d;
-                    alert(responseFromServer);
-                    $('#signup_btn_id').prop('disabled', function (i, v) { return !v; });
-                }
-            });
+                });
+            } 
         }
     </script>
 </head>
@@ -116,7 +136,7 @@
             <label for="inputUsername" class="col-md-4 col-form-label">Username: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="username_id" placeholder="username">
+                <input type="text" class="form-control me-md-2 w-75" id="username_id" placeholder="username">
             </div>
         </div>
 
@@ -125,7 +145,8 @@
             <label for="inputEmail" class="col-md-4 col-form-label">Email: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="email_id" placeholder="example@email.com">
+                <input type="email" class="form-control me-md-2 w-75" id="email_id" placeholder="example@email.com" 
+                       pattern="^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9._%+-]+\.)+[a-zA-Z]{2,}$" >
             </div>
         </div>
 
@@ -134,7 +155,10 @@
             <label for="inputPassword" class="col-md-4 col-form-label">Password: </label>
 
             <div class="col-md-6">
-                <input type="password" class="form-control me-md-2 w-75" id="password_id" placeholder="password">
+                <input type="password" class="form-control me-md-2 w-75" id="password_id" placeholder="password" 
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                      >
             </div>
         </div>
 
@@ -143,7 +167,7 @@
             <label for="inputReenter" class="col-md-4 col-form-label">Re-enter Password: </label>
 
             <div class="col-md-6">
-                <input type="password" class="form-control me-md-2 w-75" id="reenter_id" placeholder="re-enter password">
+                <input type="password" class="form-control me-md-2 w-75" id="reenter_id" placeholder="re-enter password" >
             </div>
         </div>
 

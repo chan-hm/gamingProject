@@ -102,41 +102,52 @@
 
         // allow users to view &/ update account info
         function SaveButton() {
-            var webMethod = "gamingProject.asmx/SaveInfo";
-            var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val() };
-            console.log(parameters);
+            var username_input = $('#username_id').val();
+            var email_input = $('#email_id').val();
+            var password_input = $('#password_id').val();
+            var re_enter_input = $('#reenter_id').val();
 
-            var json_data = JSON.stringify(parameters);
-            console.log(json_data);
+            var email_pattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9._%+-]+\.)+[a-zA-Z]{2,}$/;
 
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
+            // all inputs are required
+            if (username_input == "" || email_input == "" || password_input == "" || re_enter_input == "") {
+                alert("Please fill in all fields.")
+            }
 
-                    var responseFromServer = response.d;
-                    console.log(responseFromServer);
+            // email address has to be in the right format listed above
+            else if (!email_pattern.test(email_input)) {
+                alert("Invalid email address.");
+                $('#email_id').focus();
+            }
 
-                    //// transfer to a page -- lol ranking sys
-                    //if (responseFromServer == "Added game_Played = 1 into db") {
-                    //    window.location.replace("rsLOL.html");
-                    //}
+            else {
+                var webMethod = "gamingProject.asmx/SaveInfo";
+                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val() };
+                console.log(parameters);
 
-                    //// transfer to a page -- apex ranking sys
-                    //else if (responseFromServer == "Added game_Played = 2 into db") {
-                    //    window.location.replace("rsAPEX.html");
-                    //}
+                var json_data = JSON.stringify(parameters);
+                console.log(json_data);
 
-                    //// transfer to a page -- lol ranking sys
-                    //else if (responseFromServer == "Added game_Played = 3 into db") {
-                    //    window.location.replace("rsCSGO.html");
-                    //}
-                }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    data: json_data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+
+                        var responseFromServer = response.d;
+                        console.log(responseFromServer);
+
+                        // pop up an alert which tells the user all info is saved
+                        if (responseFromServer == "Updated info") {
+                            alert("All saved.");
+                        }
+                    }
+                });
+            }
+            
         }
 
     </script>
@@ -180,7 +191,7 @@
             <label for="inputUsername" class="col-md-4 col-form-label">Username: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="username_id" required>
+                <input type="text" class="form-control me-md-2 w-75" id="username_id">
             </div>
         </div>
 
@@ -189,7 +200,7 @@
             <label for="inputEmail" class="col-md-4 col-form-label">Email: </label>
 
             <div class="col-md-6">
-                <input type="email" class="form-control me-md-2 w-75" id="email_id" required>
+                <input type="email" class="form-control me-md-2 w-75" id="email_id">
             </div>
         </div>
 
@@ -199,7 +210,7 @@
 
             <div class="col-md-6" id="passwordContainer_id">
                 <i class="bi bi-eye-fill" id="eye_fill_id"></i>
-                <input type="password" class="form-control me-md-2 w-75" id="password_id" required>
+                <input type="password" class="form-control me-md-2 w-75" id="password_id">
 
             </div>
         </div>
