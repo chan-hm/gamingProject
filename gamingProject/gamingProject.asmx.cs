@@ -145,7 +145,7 @@ namespace gamingProject
                     user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
                     username = sqlDt.Rows[i]["username"].ToString(),
                     email = sqlDt.Rows[i]["email"].ToString(),
-                    password = sqlDt.Rows[i]["password"].ToString(),
+                    password = sqlDt.Rows[i]["password"].ToString()
                 });
             }
             return user.ToArray();
@@ -270,7 +270,7 @@ namespace gamingProject
                     user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
                     username = sqlDt.Rows[i]["username"].ToString(),
                     email = sqlDt.Rows[i]["email"].ToString(),
-                    password = sqlDt.Rows[i]["password"].ToString(),
+                    password = sqlDt.Rows[i]["password"].ToString()
                 });
             }
             return user.ToArray();
@@ -309,7 +309,38 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
+        // list all players who play the same game
+        [WebMethod(EnableSession = true)]
+        public Users[] ViewPlayers()
+        {            
+            var game_played = Session["game_played"];
 
+            DataTable sqlDt = new DataTable("Users");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played = '" + game_played + "';";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Users> user = new List<Users>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                user.Add(new Users
+                {
+                    user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
+                    username = sqlDt.Rows[i]["username"].ToString(),
+                    game_played = Convert.ToInt32(sqlDt.Rows[i]["game_played"]),
+                    rank_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
+                    rank_division = sqlDt.Rows[i]["rank_division"].ToString(),
+                    role = sqlDt.Rows[i]["role"].ToString()
+                });
+            }
+            return user.ToArray();
+        }
 
         // list all users info
         //[WebMethod]
