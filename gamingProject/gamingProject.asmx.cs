@@ -249,12 +249,12 @@ namespace gamingProject
         [WebMethod(EnableSession = true)]
         public Users[] CheckNullGameUsers()
         {
-            var username = Session["username"];
+            var user_id = Convert.ToInt32(Session["user_id"]);
 
             DataTable sqlDt = new DataTable("Users");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played is NULL AND username = '" + username + "';";
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played is NULL AND user_id = " + user_id + ";";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -298,7 +298,6 @@ namespace gamingProject
             {
                 sqlCommand.ExecuteNonQuery();
                 return "Updated info";
-
             }
 
             catch (Exception e)
@@ -312,13 +311,14 @@ namespace gamingProject
         // list all players who play the same game
         [WebMethod(EnableSession = true)]
         public Users[] ViewPlayers()
-        {            
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
             var game_played = Session["game_played"];
 
             DataTable sqlDt = new DataTable("Users");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played = '" + game_played + "';";
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played = '" + game_played + "' AND user_id != " + user_id + ";";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -340,6 +340,35 @@ namespace gamingProject
                 });
             }
             return user.ToArray();
+        }
+
+        // Update a new gaming partner
+        [WebMethod(EnableSession = true)]
+        public string UpdatePartner(int partner_id)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`users` SET `partner` = " + partner_id + " WHERE `user_id` = " + user_id + ";" +
+                               "UPDATE `pj2`.`users` SET `partner` = " + user_id + " WHERE `user_id` = " + partner_id + ";";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                return "Updated partner id";
+            }
+
+            catch (Exception e)
+            {
+                var e_str = e.ToString();
+                return e_str;
+            }
+            sqlConnection.Close();
         }
 
         // list all users info

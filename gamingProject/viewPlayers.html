@@ -29,7 +29,9 @@
     <title>Find your partner</title>
 
     <script type="text/javascript">
-        // display the username on navbar
+        var username_ac = "";
+
+        // displays the username on navbar
         function ViewUser() {
             var webMethod = "gamingProject.asmx/ViewUser";
 
@@ -46,6 +48,8 @@
 
                     var username = infoArray[0]["username"];
                     //console.log(username);
+
+                    username_ac = username;
 
                     document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
                 }
@@ -78,7 +82,7 @@
             });
         }
 
-        // display all users who play the same game
+        // displays all users who play the same game
         function ListPlayers() {
             var webMethod = "gamingProject.asmx/ViewPlayers";
 
@@ -95,6 +99,7 @@
 
                     for (var i = 0; i < infoArray.length; i++) {
                         for (var i = 0; i < infoArray.length; i++) {
+                            var user_id = infoArray[i]["user_id"];
                             var username = infoArray[i]["username"];
                             var rank_tier = infoArray[i]["rank_tier"];
                             var rank_division = infoArray[i]["rank_division"];
@@ -107,27 +112,61 @@
                             var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id'>Select</button></td>";
+                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
                             var tr_close = select_button + "</tr>";
 
                             table_body.append(tr_close);
 
-                            console.log(username, rank_tier, rank_division, role);
+                            console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
-                    } 
+                    }   
                 }
             });
         }
 
+        // allows users to search for tier/ division/ role
         $(document).ready(function () {
+            // onkeyup -- occurs when the user releases a key
             $("#inputSearch_id").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#table_body_id tr").filter(function () {
+                    // .toggle() -- hide/ show row(s)
+                    // .indexOf() -- returns -1 if the value to search for never occurs
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
 
+        // be able to update the partner to db
+        function SelectPartner(partnerValue) {
+            var webMethod = "gamingProject.asmx/UpdatePartner";
+            var parameters = { partner_id: partnerValue };
+            console.log(parameters);
+
+            var json_data = JSON.stringify(parameters);
+            console.log(json_data);
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: json_data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
+
+                    if (responseFromServer == "Updated partner id") {
+                        alert("Enjoy playing with this player!");
+                        //window.location.replace(".html");
+                    }
+                    else {
+                        alert("Not able to select this player.");
+                    }
+                }
+            })
+        }
     </script>
 </head>
 
@@ -168,28 +207,11 @@
                     <th scope="col">Rank Tier</th>
                     <th scope="col">Rank Division</th>
                     <th scope="col">Role</th>
-                    <th scope="col">Select Me</th>
+                    <th scope="col">Select Your Partner</th>
                 </tr>
             </thead>
             <tbody id="table_body_id">
-                <!--<tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>-->
+                <!--something will be added with js-->
             </tbody>
         </table>
     </div>

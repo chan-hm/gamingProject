@@ -157,3 +157,9 @@
     cursor: pointer;
     margin-left: 15vh;
 }
+
+/*View players*/
+#inputSearch_id {
+    width: 191vh;
+    margin-left: 6.5vh;
+}
