@@ -163,3 +163,15 @@
     width: 191vh;
     margin-left: 6.5vh;
 }
+
+#requestModalLabel{
+    color: black;
+}
+
+#playing-time {
+    color: black;
+}
+
+.close {
+    color: black;
+}

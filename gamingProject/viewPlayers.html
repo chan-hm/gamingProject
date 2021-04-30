@@ -14,6 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+   
+
     <!--Font style-->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind:wght@500&display=swap');
@@ -112,14 +114,15 @@
                             var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
+                            //var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
+                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id'>Select</button></td>";
                             var tr_close = select_button + "</tr>";
 
                             table_body.append(tr_close);
 
                             console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
-                    }   
+                    }
                 }
             });
         }
@@ -199,6 +202,7 @@
 
     <input class="form-control px-md-5" type="text" id="inputSearch_id" onkeyup="LookUp()" placeholder="Search for a Rank Tier, Rank Division, or Role.." title="Type in a rank tier, division, or role">
 
+    <!--displays player table-->
     <div class="table-responsive-md px-md-5 ">
         <table class="table table-striped table-dark">
             <thead>
@@ -214,7 +218,39 @@
                 <!--something will be added with js-->
             </tbody>
         </table>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#requestModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requestModalLabel">Select a date and time you want to duo with this player.</h5>
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>-->
+                    </div>
+                    <div class="modal-body">
+                        <input type="datetime-local" id="playing-time"
+                               name="playing-time" min="2021-04-29T00:00" max="2021-05-13T00:00"><!--value="2018-06-12T19:30"-->
+                                
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Submit your request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
 
@@ -225,5 +261,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 
+
+   
 </body>
 </html>
