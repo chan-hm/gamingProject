@@ -170,6 +170,48 @@
                 }
             })
         }
+
+
+        // set min value of playingTime_id as today & max value as 2 weeks later
+        $(document).ready(function () {
+            //$("playingTime_id").on("load", function () {
+            var today = new Date();
+            var twoWeeksDate = new Date();
+            var twoWeeks = today.addDays(14); // *************
+
+            var day = today.getDate();
+            
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month < 10) {
+                month = "0" + month;
+            }
+
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            today = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+            twoWeeksDate = year + "-" + month + "-" + twoWeeks + "T" + hour + ":" + minute;
+        /*$(this).setAttribute("value", today);*/
+
+            var setting = document.getElementById("playingTime_id");
+            setting.value = today;
+            setting.min = today;
+            setting.max = twoWeeksDate;
+            
+
+        });
     </script>
 </head>
 
@@ -229,15 +271,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="requestModalLabel">Select a date and time you want to duo with this player.</h5>
+                        <h4 class="modal-title" id="requestModalLabel_id">Select a date and time you want to duo with this player.</h4>
                         <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>-->
                     </div>
                     <div class="modal-body">
-                        <input type="datetime-local" id="playing-time"
-                               name="playing-time" min="2021-04-29T00:00" max="2021-05-13T00:00"><!--value="2018-06-12T19:30"-->
-                                
+                        <input type="datetime-local" id="playingTime_id"
+                               name="playing-time"><!--min="2021-04-29T00:00" max="2021-05-13T00:00" value="2018-06-12T19:30"-->
+
 
 
 

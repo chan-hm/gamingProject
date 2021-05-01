@@ -164,11 +164,11 @@
     margin-left: 6.5vh;
 }
 
-#requestModalLabel{
+#requestModalLabel_id{
     color: black;
 }
 
-#playing-time {
+#playingTime_id {
     color: black;
 }
 
