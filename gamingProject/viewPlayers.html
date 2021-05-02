@@ -115,12 +115,16 @@
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
                             //var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
-                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id'>Select</button></td>";
+                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' data-toggle='modal' data-target='#requestModal' value='" + user_id + "' id='select_btn_id'>Select</button></td>";
                             var tr_close = select_button + "</tr>";
 
                             table_body.append(tr_close);
 
                             console.log(user_id.toString(), username, rank_tier, rank_division, role);
+
+
+                       
+
                         }
                     }
                 }
@@ -141,13 +145,103 @@
         });
 
         // be able to update the partner to db
-        function SelectPartner(partnerValue) {
-            var webMethod = "gamingProject.asmx/UpdatePartner";
-            var parameters = { partner_id: partnerValue };
-            console.log(parameters);
+        //function SelectPartner(partnerValue) {
+        //    var webMethod = "gamingProject.asmx/UpdatePartner";
+        //    var parameters = { partner_id: partnerValue };
+        //    console.log(parameters);
+
+        //    var json_data = JSON.stringify(parameters);
+        //    console.log(json_data);
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        data: json_data,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            console.log(response);
+        //            var responseFromServer = response.d;
+        //            console.log(responseFromServer);
+
+        //            if (responseFromServer == "Updated partner id") {
+        //                alert("Enjoy playing with this player!");
+        //                //window.location.replace(".html");
+        //            }
+        //            else {
+        //                alert("Not able to select this player.");
+        //            }
+        //        }
+        //    })
+        //}
+
+
+        // set min value of playingTime_id as today & max value as 2 weeks later
+        $(document).ready(function () {
+            
+            var today = new Date();      
+            var day = today.getDate();
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+
+            var newDate = new Date();
+            newDate.setDate(day + 14);
+            var newDay = newDate.getDate();
+            var newMonth = newDate.getMonth() + 1;
+            var newYear = newDate.getFullYear();
+
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (newDay < 10) {
+                newDay = "0" + newDay;
+            }
+
+            if (month < 10) {
+                month = "0" + month;
+            }
+
+            if (newMonth < 10) {
+                newMonth = "0" + newMonth;
+            }
+
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+
+            today = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+            newDate = newYear + "-" + newMonth + "-" + newDay + "T00:00";
+            
+            var setting = document.getElementById("playingTime_id");
+            setting.value = today;
+            setting.min = today;
+            setting.max = newDate;
+        });
+
+        // send a request to another user
+        function SubmitRequest() {
+            var webMethod = "gamingProject.asmx/SendRequest";
+            var dateTime = $("#playingTime_id").val();
+            /*console.log(dateTime);*/
+
+            var dateValue = dateTime.slice(0, 10);
+           /* console.log(dateValue);*/
+
+            var timeValue = dateTime.slice(11);
+            //console.log(timeValue);
+
+            var parameters = { partner_id: $("#select_btn_id").val(), date: dateValue, time: timeValue  };
+            //console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
+            //console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -160,8 +254,8 @@
                     var responseFromServer = response.d;
                     console.log(responseFromServer);
 
-                    if (responseFromServer == "Updated partner id") {
-                        alert("Enjoy playing with this player!");
+                    if (responseFromServer == "pending request") {
+                        alert("Pending");
                         //window.location.replace(".html");
                     }
                     else {
@@ -170,48 +264,6 @@
                 }
             })
         }
-
-
-        // set min value of playingTime_id as today & max value as 2 weeks later
-        $(document).ready(function () {
-            //$("playingTime_id").on("load", function () {
-            var today = new Date();
-            var twoWeeksDate = new Date();
-            var twoWeeks = today.addDays(14); // *************
-
-            var day = today.getDate();
-            
-            var month = today.getMonth() + 1;
-            var year = today.getFullYear();
-            var hour = today.getHours();
-            var minute = today.getMinutes();
-
-            if (day < 10) {
-                day = "0" + day;
-            }
-
-            if (month < 10) {
-                month = "0" + month;
-            }
-
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            today = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
-            twoWeeksDate = year + "-" + month + "-" + twoWeeks + "T" + hour + ":" + minute;
-        /*$(this).setAttribute("value", today);*/
-
-            var setting = document.getElementById("playingTime_id");
-            setting.value = today;
-            setting.min = today;
-            setting.max = twoWeeksDate;
-            
-
-        });
     </script>
 </head>
 
@@ -261,32 +313,19 @@
             </tbody>
         </table>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#requestModal">
-            Launch demo modal
-        </button>
-
-        <!-- Modal -->
+        <!-- Request modal -->
         <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="requestModalLabel_id">Select a date and time you want to duo with this player.</h4>
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>-->
+                        <h4 class="modal-title" id="requestModalLabel_id">Select a date and time you want to duo with this player.</h4>                    
                     </div>
                     <div class="modal-body">
-                        <input type="datetime-local" id="playingTime_id"
-                               name="playing-time"><!--min="2021-04-29T00:00" max="2021-05-13T00:00" value="2018-06-12T19:30"-->
-
-
-
-
+                        <input type="datetime-local" id="playingTime_id" name="playing-time">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Submit your request</button>
+                        <button type="button" class="btn btn-primary" onclick="SubmitRequest()">Submit your request</button>
                     </div>
                 </div>
             </div>

@@ -343,14 +343,42 @@ namespace gamingProject
         }
 
         // Update a new gaming partner
+        //[WebMethod(EnableSession = true)]
+        //public string UpdatePartner(int partner_id)
+        //{
+        //    var user_id = Convert.ToInt32(Session["user_id"]);
+
+        //    string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+        //    string sqlSelect = "UPDATE `pj2`.`users` SET `partner` = " + partner_id + " WHERE `user_id` = " + user_id + ";" +
+        //                       "UPDATE `pj2`.`users` SET `partner` = " + user_id + " WHERE `user_id` = " + partner_id + ";";
+
+        //    MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+        //    MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+        //    sqlConnection.Open();
+
+        //    try
+        //    {
+        //        sqlCommand.ExecuteNonQuery();
+        //        return "Updated partner id";
+        //    }
+
+        //    catch (Exception e)
+        //    {
+        //        var e_str = e.ToString();
+        //        return e_str;
+        //    }
+        //    sqlConnection.Close();
+        //}
+
+        
         [WebMethod(EnableSession = true)]
-        public string UpdatePartner(int partner_id)
+        public string SendRequest( int partner_id, string date, string time)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `partner` = " + partner_id + " WHERE `user_id` = " + user_id + ";" +
-                               "UPDATE `pj2`.`users` SET `partner` = " + user_id + " WHERE `user_id` = " + partner_id + ";";
+            string sqlSelect = "INSERT INTO `pj2`.`requests` (`request_user`, `request_partner`, `date`, `time`, `status`) VALUES('" + user_id + "', '" + partner_id + "', '" + date + "', '" + time + "', 'pending');";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -360,7 +388,7 @@ namespace gamingProject
             try
             {
                 sqlCommand.ExecuteNonQuery();
-                return "Updated partner id";
+                return "pending request";
             }
 
             catch (Exception e)
@@ -370,6 +398,9 @@ namespace gamingProject
             }
             sqlConnection.Close();
         }
+
+
+
 
         // list all users info
         //[WebMethod]
