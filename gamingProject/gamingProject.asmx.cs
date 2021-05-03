@@ -399,7 +399,42 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
+        // list all info of requests
+        [WebMethod(EnableSession = true)]
+        public Requests[] ViewRequests()
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
 
+            DataTable sqlDt = new DataTable("Requests");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "';";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Requests> request = new List<Requests>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                request.Add(new Requests
+                {
+                    request_id = Convert.ToInt32(sqlDt.Rows[i]["request_id"]),
+                    request_user = Convert.ToInt32(sqlDt.Rows[i]["request_user"]),
+                    request_partner = Convert.ToInt32(sqlDt.Rows[i]["request_partner"]),
+                    date = sqlDt.Rows[i]["date"].ToString(),
+                    time = sqlDt.Rows[i]["time"].ToString(),
+                    status = sqlDt.Rows[i]["status"].ToString(),
+                    username = sqlDt.Rows[i]["username"].ToString(),
+                    request_user_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
+                    request_user_division = sqlDt.Rows[i]["rank_division"].ToString(),
+                    request_user_role = sqlDt.Rows[i]["role"].ToString()
+                });
+            }
+            return request.ToArray();
+        }
 
 
         // list all users info

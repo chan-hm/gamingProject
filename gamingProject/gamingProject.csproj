@@ -124,6 +124,7 @@
   <ItemGroup>
     <Content Include="home.html" />
     <Content Include="editAccount.html" />
+    <Content Include="viewRequests.html" />
     <Content Include="viewPlayers.html" />
     <Content Include="rsCSGO.html" />
     <Content Include="rsAPEX.html" />
@@ -136,6 +137,7 @@
     <Content Include="gamingProject.asmx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="request.cs" />
     <Compile Include="games.cs" />
     <Compile Include="users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
