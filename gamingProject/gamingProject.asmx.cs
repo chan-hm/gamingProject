@@ -436,6 +436,54 @@ namespace gamingProject
             return request.ToArray();
         }
 
+        [WebMethod(EnableSession = true)]
+        public void AcceptRequest(int request_id)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`requests` SET `status` = 'accept' WHERE(`request_id` = " + request_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+            }
+            sqlConnection.Close();
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void DenyRequest(int request_id)
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`requests` SET `status` = 'deny' WHERE(`request_id` = " + request_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+            }
+            sqlConnection.Close();
+        }
+
 
         // list all users info
         //[WebMethod]
