@@ -278,12 +278,12 @@ namespace gamingProject
 
         // allows users to change their account info
         [WebMethod(EnableSession = true)]
-        public string SaveInfo(string username, string email, string password)
+        public string SaveInfo(string username, string email, string password, string gaming_username)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `username` = (@usernameValue), `email` = (@emailValue), `password` = (@passwordValue) WHERE(`user_id` = " + user_id + ");";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `username` = (@usernameValue), `email` = (@emailValue), `password` = (@passwordValue), `gaming_username` = (@gamingUsernameValue) WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -291,6 +291,7 @@ namespace gamingProject
             sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
             sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
             sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
+            sqlCommand.Parameters.AddWithValue("@gamingUsernameValue", HttpUtility.UrlDecode(gaming_username));
 
             sqlConnection.Open();
 
@@ -408,7 +409,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Requests");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "';";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.status = 'pending' AND pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "';";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);

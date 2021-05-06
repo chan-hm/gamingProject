@@ -87,8 +87,8 @@
             });
         }
 
-        // allow users to show/ hide password
         $(document).ready(function () {
+            // allow users to show/ hide password
             $("#eye_fill_id").click(function () {
                 var starred_password = document.getElementById("password_id");
                 if (starred_password.type === "password") {
@@ -98,6 +98,27 @@
                     starred_password.type = "password";
                 }
             });
+
+            // change color of the request button in nav bar
+            var webMethod = "gamingProject.asmx/ViewRequests";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    //console.log(array);
+
+                    var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    if (infoArray.length > 0) {
+                        //console.log(infoArray);
+                        $("#nav_notification_id").css("color", "red");
+                    }
+                }
+            });
         });
 
         // allow users to view &/ update account info
@@ -105,12 +126,12 @@
             var username_input = $('#username_id').val();
             var email_input = $('#email_id').val();
             var password_input = $('#password_id').val();
-            var re_enter_input = $('#reenter_id').val();
+            var gamingUsername_input = $('#gamingUsername_id').val();
 
             var email_pattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9._%+-]+\.)+[a-zA-Z]{2,}$/;
 
             // all inputs are required
-            if (username_input == "" || email_input == "" || password_input == "" || re_enter_input == "") {
+            if (username_input == "" || email_input == "" || password_input == "" || gamingUsername_input == "") {
                 alert("Please fill in all fields.")
             }
 
@@ -122,7 +143,7 @@
 
             else {
                 var webMethod = "gamingProject.asmx/SaveInfo";
-                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val() };
+                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), gaming_username: $('#gamingUsername_id').val() };
                 console.log(parameters);
 
                 var json_data = JSON.stringify(parameters);
@@ -157,7 +178,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.html">Matcher</a>
+            <a class="navbar-brand" href="viewPlayers.html">Matcher</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -194,7 +215,7 @@
             <label for="inputUsername" class="col-md-4 col-form-label">Username: </label>
 
             <div class="col-md-6">
-                <input type="text" class="form-control me-md-2 w-75" id="username_id">
+                <input type="text" class="form-control me-md-2 w-75" id="username_id" disabled>
             </div>
         </div>
 
@@ -215,6 +236,15 @@
                 <i class="bi bi-eye-fill" id="eye_fill_id"></i>
                 <input type="password" class="form-control me-md-2 w-75" id="password_id">
 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-form-label"></div>
+            <label for="inputGameUsername" class="col-md-4 col-form-label">Gaming Username : </label>
+
+            <div class="col-md-6" id="gamingUsernameContainer_id">
+                <input type="text" class="form-control me-md-2 w-75" id="gamingUsername_id">
             </div>
         </div>
 

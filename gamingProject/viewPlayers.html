@@ -28,7 +28,7 @@
         }
     </style>
 
-    <title>Find your partner</title>
+    <title>Select a Player</title>
 
     <script type="text/javascript">
         var username_ac = "";
@@ -123,12 +123,19 @@
                             //console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
                     }
+
+                    if (infoArray.length == 0) {
+                        var table_body = $("#table_body_id");
+                        var nothing_displayed = "<tr><th scope='row'>No players at this moment.</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                        table_body.append(nothing_displayed);
+                    }
                 }
             });
         }
 
-        // allows users to search for tier/ division/ role
+        
         $(document).ready(function () {
+            // allows users to search for tier/ division/ role
             // onkeyup -- occurs when the user releases a key
             $("#inputSearch_id").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -138,44 +145,9 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-        });
 
-        // be able to update the partner to db
-        //function SelectPartner(partnerValue) {
-        //    var webMethod = "gamingProject.asmx/UpdatePartner";
-        //    var parameters = { partner_id: partnerValue };
-        //    console.log(parameters);
-
-        //    var json_data = JSON.stringify(parameters);
-        //    console.log(json_data);
-
-        //    $.ajax({
-        //        type: "POST",
-        //        url: webMethod,
-        //        data: json_data,
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (response) {
-        //            console.log(response);
-        //            var responseFromServer = response.d;
-        //            console.log(responseFromServer);
-
-        //            if (responseFromServer == "Updated partner id") {
-        //                alert("Enjoy playing with this player!");
-        //                //window.location.replace(".html");
-        //            }
-        //            else {
-        //                alert("Not able to select this player.");
-        //            }
-        //        }
-        //    })
-        //}
-
-
-        // set min value of playingTime_id as today & max value as 2 weeks later
-        $(document).ready(function () {
-            
-            var today = new Date();      
+            // set min value of playingTime_id as today & max value as 2 weeks later
+            var today = new Date();
             var day = today.getDate();
             var month = today.getMonth() + 1;
             var year = today.getFullYear();
@@ -214,12 +186,64 @@
 
             today = year + "-" + month + "-" + day + "T" + hour + ":" + minute;
             newDate = newYear + "-" + newMonth + "-" + newDay + "T00:00";
-            
+
             var setting = document.getElementById("playingTime_id");
             setting.value = today;
             setting.min = today;
             setting.max = newDate;
+
+            // change color of the request button in nav bar
+            var webMethod = "gamingProject.asmx/ViewRequests";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    //console.log(array);
+
+                    var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    if (infoArray.length > 0) {
+                        //console.log(infoArray);
+                        $("#nav_notification_id").css("color", "red");
+                    }
+                }
+            });
         });
+
+        // be able to update the partner to db
+        //function SelectPartner(partnerValue) {
+        //    var webMethod = "gamingProject.asmx/UpdatePartner";
+        //    var parameters = { partner_id: partnerValue };
+        //    console.log(parameters);
+
+        //    var json_data = JSON.stringify(parameters);
+        //    console.log(json_data);
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        data: json_data,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            console.log(response);
+        //            var responseFromServer = response.d;
+        //            console.log(responseFromServer);
+
+        //            if (responseFromServer == "Updated partner id") {
+        //                alert("Enjoy playing with this player!");
+        //                //window.location.replace(".html");
+        //            }
+        //            else {
+        //                alert("Not able to select this player.");
+        //            }
+        //        }
+        //    })
+        //}
 
         // send a request to another user
         function SubmitRequest() {
@@ -251,8 +275,8 @@
                     console.log(responseFromServer);
 
                     if (responseFromServer == "pending request") {
-                        alert("Pending");
-                        //window.location.replace(".html");
+                        alert("Please enter you real username in the game.");
+                        window.location.replace("editAccount.html");
                     }
                     else {
                         alert("Not able to select this player.");
@@ -267,7 +291,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.html">Matcher</a>
+            <a class="navbar-brand" href="viewPlayers.html">Matcher</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -275,6 +299,9 @@
 
             <!--<div class="collapse navbar-collapse" id="navbaritems">-->
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <!--<li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_inbox_id" href="inbox.html"><i class="fa fa-inbox pe-md-2"></i>Messages</a>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
                 </li>
@@ -293,7 +320,7 @@
 
     <h1 class="text-center">Find your partner</h1>
 
-    <input class="form-control px-md-5" type="text" id="inputSearch_id" onkeyup="LookUp()" placeholder="Search for a Rank Tier, Rank Division, or Role.." title="Type in a rank tier, division, or role">
+    <input class="form-control px-md-5" type="text" id="inputSearch_id" placeholder="Search for a Rank Tier, Rank Division, or Role.." title="Type in a rank tier, division, or role">
 
     <!--displays player table-->
     <div class="table-responsive-md px-md-5 ">

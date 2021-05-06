@@ -124,6 +124,7 @@
   <ItemGroup>
     <Content Include="home.html" />
     <Content Include="editAccount.html" />
+    <Content Include="viewSchedules.html" />
     <Content Include="viewRequests.html" />
     <Content Include="viewPlayers.html" />
     <Content Include="rsCSGO.html" />

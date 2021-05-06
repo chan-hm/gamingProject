@@ -22,17 +22,16 @@
 
         /*bg*/
         body {
-            background-image: url('request_bg.jpg');
+            background-image: url('schedule_bg.jpg');
             background-attachment: fixed;
             background-size: cover;
         }
     </style>
 
-    <title>View Requests</title>
+    <title>Gaming Schedule</title>
 
     <script type="text/javascript">
         var username_ac = "";
-        var request_num = 0;
 
         // displays the username on navbar
         function ViewUser() {
@@ -86,8 +85,8 @@
         }
 
         // displays all users who play the same game
-        function ListRequests() {
-            var webMethod = "gamingProject.asmx/ViewRequests";
+        function ListSchedule() {
+            var webMethod = "gamingProject.asmx/ViewPlayers";
 
             $.ajax({
                 type: "POST",
@@ -98,26 +97,16 @@
                     console.log(array);
 
                     var infoArray = array.d;
-                    console.log(infoArray); 
+                    console.log(infoArray);
 
                     for (var i = 0; i < infoArray.length; i++) {
-                        for (var i = 0; i < infoArray.length; i++) { 
-                            var request_id = infoArray[i]["request_id"];
+                        for (var i = 0; i < infoArray.length; i++) {
+                            var user_id = infoArray[i]["user_id"];
                             var username = infoArray[i]["username"];
-                            var rank_tier = infoArray[i]["request_user_tier"];
-                            var rank_division = infoArray[i]["request_user_division"];
-                            var role = infoArray[i]["request_user_role"];
-                            var date = infoArray[i]["date"];
-                            var time = infoArray[i]["time"];
+                            var rank_tier = infoArray[i]["rank_tier"];
+                            var rank_division = infoArray[i]["rank_division"];
+                            var role = infoArray[i]["role"];
 
-                            request_num = request_id;
-
-                            // only need the date
-                            date = date.split(" ")[0];
-
-                            // only need hh:mm
-                            time = time.slice(0, 5);
-                            
                             var table_body = $("#table_body_id");
 
                             var tr_open = "<tr>";
@@ -125,34 +114,66 @@
                             var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var date_col = role_col + "<td>" + date + "</td>";
-                            var time_col = date_col + "<td>" + time + "</td>";
-                            var buttons = time_col + "<td><button type='button' class='btn btn-secondary btn-md' id='deny_btn_id' onclick='Deny()'>Deny</button> <button type='button' class='btn btn-success btn-md' id='accept_btn_id' onclick='Accept()'>Accept</button>";
-                            var tr_close = buttons + "</tr>";
+                            //var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
+                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' data-toggle='modal' data-target='#requestModal' value='" + user_id + "' id='select_btn_id'>Select</button></td>";
+                            var tr_close = select_button + "</tr>";
 
                             table_body.append(tr_close);
 
-                            console.log(request_id, username, rank_tier, rank_division, role, date, time);
-
+                            //console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
                     }
 
                     if (infoArray.length == 0) {
                         var table_body = $("#table_body_id");
-                        var nothing_displayed = "<tr><th scope='row'>No requests at this moment.</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                        var nothing_displayed = "<tr><th scope='row'>No players at this moment.</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                         table_body.append(nothing_displayed);
                     }
                 }
             });
         }
 
-        function Accept() {
-            var webMethod = "gamingProject.asmx/AcceptRequest";
-            var parameters = { request_id: request_num };
-            console.log(parameters);
+
+        $(document).ready(function () {
+            // change color of the request button in nav bar
+            var webMethod = "gamingProject.asmx/ViewRequests";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    //console.log(array);
+
+                    var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    if (infoArray.length > 0) {
+                        //console.log(infoArray);
+                        $("#nav_notification_id").css("color", "red");
+                    }
+                }
+            });
+        });
+
+        // send a request to another user
+        function SubmitRequest() {
+            var webMethod = "gamingProject.asmx/SendRequest";
+            var dateTime = $("#playingTime_id").val();
+            /*console.log(dateTime);*/
+
+            var dateValue = dateTime.slice(0, 10);
+           /* console.log(dateValue);*/
+
+            var timeValue = dateTime.slice(11);
+            //console.log(timeValue);
+
+            var parameters = { partner_id: $("#select_btn_id").val(), date: dateValue, time: timeValue  };
+            //console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
+            //console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -160,44 +181,25 @@
                 data: json_data,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function () {
-                    alert("Accepted!");
-                    
-                },
-                error: function () {
-                    alert("Something went wrong.");
+                success: function (response) {
+                    console.log(response);
+                    var responseFromServer = response.d;
+                    console.log(responseFromServer);
+
+                    if (responseFromServer == "pending request") {
+                        alert("Pending");
+                        //window.location.replace(".html");
+                    }
+                    else {
+                        alert("Not able to select this player.");
+                    }
                 }
-            });
+            })
         }
-
-        function Deny() {
-            var webMethod = "gamingProject.asmx/DenyRequest";
-            var parameters = { request_id: request_num };
-            console.log(parameters);
-
-            var json_data = JSON.stringify(parameters);
-            console.log(json_data);
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function () {
-                    alert("Denied!");
-
-                },
-                error: function () {
-                    alert("Something went wrong.");
-                }
-            });
-        }
-       
     </script>
 </head>
 
-<body onload="ViewUser(), ListRequests()">
+<body onload="ViewUser(), ListPlayers()">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
@@ -209,6 +211,9 @@
 
             <!--<div class="collapse navbar-collapse" id="navbaritems">-->
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <!--<li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_inbox_id" href="inbox.html"><i class="fa fa-inbox pe-md-2"></i>Messages</a>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
                 </li>
@@ -225,27 +230,26 @@
         </div>
     </nav>
 
-    <h1 class="text-center">View Requests</h1>
+    <h1 class="text-center">Gaming Schedule</h1>
 
     <!--displays player table-->
     <div class="table-responsive-md px-md-5 ">
         <table class="table table-striped table-dark">
             <thead>
                 <tr>
-                    <th scope="col">Username</th>
+                    <th scope="col">Gaming Username</th>
                     <th scope="col">Rank Tier</th>
                     <th scope="col">Rank Division</th>
                     <th scope="col">Role</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
-                    <th scope="col">Accept/ Deny</th>
                 </tr>
             </thead>
             <tbody id="table_body_id">
                 <!--something will be added with js-->
             </tbody>
         </table>
-    </div>
+     </div>
 
 
 
