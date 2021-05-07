@@ -115,6 +115,19 @@
                             // only need the date
                             date = date.split(" ")[0];
 
+                            // change the date format
+                            var new_date = date.split("/");
+
+                            if (new_date[0] < 10) {
+                                new_date[0] = "0" + new_date[0];
+                            }
+
+                            if (new_date[1] < 10) {
+                                new_date[1] = "0" + new_date[1];
+                            }
+
+                            new_date = new_date[0] + "/" + new_date[1] + "/" + new_date[2];
+
                             // only need hh:mm
                             time = time.slice(0, 5);
                             
@@ -125,7 +138,7 @@
                             var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var date_col = role_col + "<td>" + date + "</td>";
+                            var date_col = role_col + "<td>" + new_date + "</td>";
                             var time_col = date_col + "<td>" + time + "</td>";
                             var buttons = time_col + "<td><button type='button' class='btn btn-secondary btn-md' id='deny_btn_id' onclick='Deny()'>Deny</button> <button type='button' class='btn btn-success btn-md' id='accept_btn_id' onclick='Accept()'>Accept</button>";
                             var tr_close = buttons + "</tr>";

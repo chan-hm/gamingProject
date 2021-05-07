@@ -121,6 +121,19 @@
                             // only need the date
                             date = date.split(" ")[0];
 
+                            // change the date format
+                            var new_date = date.split("/");
+
+                            if (new_date[0] < 10) {
+                                new_date[0] = "0" + new_date[0];
+                            }
+
+                            if (new_date[1] < 10) {
+                                new_date[1] = "0" + new_date[1];
+                            }
+
+                            new_date = new_date[0] + "/" + new_date[1] + "/" + new_date[2];
+
                             // only need hh:mm
                             time = time.slice(0, 5);
 
@@ -131,61 +144,124 @@
                             var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
                             var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var date_col = role_col + "<td>" + date + "</td>";
+                            var date_col = role_col + "<td>" + new_date + "</td>";
                             var time_col = date_col + "<td>" + time + "</td>";
                             var tr_close = time_col + "</tr>";
 
                             table_body.append(tr_close);
                         }
+
+                        var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
+
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (array) {
+                                //console.log(array);
+
+                                var infoArray = array.d;
+                                //console.log(infoArray);
+
+                                for (var i = 0; i < infoArray.length; i++) {
+                                    //for (var i = 0; i < infoArray.length; i++) {
+                                    var request_id = infoArray[i]["request_id"];
+                                    var partner_gaming_username = infoArray[i]["request_gaming_username"];
+                                    var partner_tier = infoArray[i]["request_partner_tier"];
+                                    var partner_division = infoArray[i]["request_partner_division"];
+                                    var partner_role = infoArray[i]["request_partner_role"];
+                                    var date = infoArray[i]["date"];
+                                    var time = infoArray[i]["time"];
+
+                                    // only need the date
+                                    date = date.split(" ")[0];
+
+                                    var new_date = date.split("/");
+
+                                    if (new_date[0] < 10) {
+                                        new_date[0] = "0" + new_date[0];
+                                    }
+
+                                    if (new_date[1] < 10) {
+                                        new_date[1] = "0" + new_date[1];
+                                    }
+
+                                    new_date = new_date[0] + "/" + new_date[1] + "/" + new_date[2];
+
+
+
+                                    // only need hh:mm
+                                    time = time.slice(0, 5);
+
+                                    var table_body = $("#table_body_id");
+
+                                    var tr_open = "<tr>";
+                                    var username_col = tr_open + "<th scope='row'>" + partner_gaming_username + "</th>";
+                                    var rankTier_col = username_col + "<td>" + partner_tier + "</td>";
+                                    var rankDivision_col = rankTier_col + "<td>" + partner_division + "</td>";
+                                    var role_col = rankDivision_col + "<td>" + partner_role + "</td>";
+                                    var date_col = role_col + "<td>" + new_date + "</td>";
+                                    var time_col = date_col + "<td>" + time + "</td>";
+                                    var tr_close = time_col + "</tr>";
+
+                                    table_body.append(tr_close);
+                                    //}
+                                }
+                            }
+                        });
+
+                       
                     }
                 }
             });
 
-            var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
+           
+            //var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
 
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (array) {
-                    console.log(array);
+            //$.ajax({
+            //    type: "POST",
+            //    url: webMethod,
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    success: function (array) {
+            //        //console.log(array);
 
-                    var infoArray = array.d;
-                    //console.log(infoArray);
+            //        var infoArray = array.d;
+            //        //console.log(infoArray);
 
-                    for (var i = 0; i < infoArray.length; i++) {
-                        for (var i = 0; i < infoArray.length; i++) {
-                            var request_id = infoArray[i]["request_id"];
-                            var partner_gaming_username = infoArray[i]["request_gaming_username"];
-                            var partner_tier = infoArray[i]["request_partner_tier"];
-                            var partner_division = infoArray[i]["request_partner_division"];
-                            var partner_role = infoArray[i]["request_partner_role"];
-                            var date = infoArray[i]["date"];
-                            var time = infoArray[i]["time"];
+            //        for (var i = 0; i < infoArray.length; i++) {
+            //            for (var i = 0; i < infoArray.length; i++) {
+            //                var request_id = infoArray[i]["request_id"];
+            //                var partner_gaming_username = infoArray[i]["request_gaming_username"];
+            //                var partner_tier = infoArray[i]["request_partner_tier"];
+            //                var partner_division = infoArray[i]["request_partner_division"];
+            //                var partner_role = infoArray[i]["request_partner_role"];
+            //                var date = infoArray[i]["date"];
+            //                var time = infoArray[i]["time"];
 
-                            // only need the date
-                            date = date.split(" ")[0];
+            //                // only need the date
+            //                date = date.split(" ")[0];
 
-                            // only need hh:mm
-                            time = time.slice(0, 5);
+            //                // only need hh:mm
+            //                time = time.slice(0, 5);
 
-                            var table_body = $("#table_body_id");
+            //                var table_body = $("#table_body_id");
 
-                            var tr_open = "<tr>";
-                            var username_col = tr_open + "<th scope='row'>" + partner_gaming_username + "</th>";
-                            var rankTier_col = username_col + "<td>" + partner_tier + "</td>";
-                            var rankDivision_col = rankTier_col + "<td>" + partner_division + "</td>";
-                            var role_col = rankDivision_col + "<td>" + partner_role + "</td>";
-                            var date_col = role_col + "<td>" + date + "</td>";
-                            var time_col = date_col + "<td>" + time + "</td>";
-                            var tr_close = time_col + "</tr>";
+            //                var tr_open = "<tr>";
+            //                var username_col = tr_open + "<th scope='row'>" + partner_gaming_username + "</th>";
+            //                var rankTier_col = username_col + "<td>" + partner_tier + "</td>";
+            //                var rankDivision_col = rankTier_col + "<td>" + partner_division + "</td>";
+            //                var role_col = rankDivision_col + "<td>" + partner_role + "</td>";
+            //                var date_col = role_col + "<td>" + date + "</td>";
+            //                var time_col = date_col + "<td>" + time + "</td>";
+            //                var tr_close = time_col + "</tr>";
 
-                            table_body.append(tr_close);
-                        }
-                    }
-                }
-            });
+            //                table_body.append(tr_close);
+            //            }
+            //        }
+            //    }
+            //});
         }
 
         $(document).ready(function () {
@@ -218,7 +294,96 @@
 
 
 
-      
+        //function sortTable() {
+        //    var table, rows, switching, i, x, y, shouldSwitch;
+        //    table = document.getElementById("schedule_table_id");
+        //    switching = true;
+        //    /* Make a loop that will continue until
+        //    no switching has been done: */
+        //    while (switching) {
+        //        // Start by saying: no switching is done:
+        //        switching = false;
+        //        rows = table.rows;
+        //        /* Loop through all table rows (except the
+        //        first, which contains table headers): */
+        //        for (i = 1; i < (rows.length - 1); i++) {
+        //            // Start by saying there should be no switching:
+        //            shouldSwitch = false;
+        //            /* Get the two elements you want to compare,
+        //            one from current row and one from the next: */
+        //            x = rows[i].getElementsByTagName("td")[3];
+        //            y = rows[i + 1].getElementsByTagName("td")[3];
+        //            // Check if the two rows should switch place:
+        //            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //                // If so, mark as a switch and break the loop:
+        //                shouldSwitch = true;
+        //                break;
+        //            }
+        //        }
+        //        if (shouldSwitch) {
+        //            /* If a switch has been marked, make the switch
+        //            and mark that a switch has been done: */
+        //            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        //            switching = true;
+        //        }
+        //    }
+        //}
+
+        function convertDate(dateValue) {
+            var date = date.split("/");
+            return (date[2] + date[0] + date[1]);
+        }
+
+        function sortTable() {
+            var table_body = $("#table_body_id");
+            var rows = [].slice.call(document.getElementsByTagName("tr"));
+            //var a = "";
+            //var b = "";
+            //var dateList = [];
+
+            // compare two date cells
+            //for (var i = 1; i < (rows.length - 1); i++) {
+            //    //a = rows[i].getElementsByTagName("td")[3].innerText;
+            //    //b = rows[i + 1].getElementsByTagName("td")[3].innerText;
+            //    //console.log(a);
+
+            //    //dateList.push(a);
+            //    //console.log(dateList);
+            //    console.log(rows);
+            //    //rows.sort(function (x, y) {
+            //    //    return convertDate(x.cell[3].innerHTML) - convertDate(y.cell[].innerHTML);
+            //    //});
+
+            //    //rows.forEach(function (v) {
+            //    //    table_body.appendChild(v); // note that .appendChild() *moves* elements
+            //    //});
+            //}
+
+            //dateList.sort(function (x, y) {
+            //    return convertDate(x) - convertDate(y);
+            //});
+
+            //dateList.forEach(function (v) {
+            //    table_body.appendChild(v); // note that .appendChild() *moves* elements
+            //});
+
+
+
+            //// get trs as array for ease of use
+            //var rows = [].slice.call(document.getElementsByTagName("td")[3]);
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ??????????????????
+            rows.sort(function (a, b) {
+                return convertDate(a[3].innerText) - convertDate(b[8].innerText);
+            });
+
+            rows.forEach(function (v) {
+                table_body.appendChild(v); // note that .appendChild() *moves* elements
+            });
+     
+
+            $("#sort_btn_id").on("click", sortTable);
+        }
 
 
     </script>
@@ -275,6 +440,8 @@
             </tbody>
         </table>
      </div>
+
+    <button type="button" id="sort_btn_id" onclick="sortTable()">click</button>
 
 
 
