@@ -138,8 +138,8 @@
     <Content Include="gamingProject.asmx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="schedule.cs" />
     <Compile Include="request.cs" />
-    <Compile Include="games.cs" />
     <Compile Include="users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="gamingProject.asmx.cs">

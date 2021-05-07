@@ -145,7 +145,8 @@ namespace gamingProject
                     user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
                     username = sqlDt.Rows[i]["username"].ToString(),
                     email = sqlDt.Rows[i]["email"].ToString(),
-                    password = sqlDt.Rows[i]["password"].ToString()
+                    password = sqlDt.Rows[i]["password"].ToString(),
+                    gaming_username = sqlDt.Rows[i]["gaming_username"].ToString()
                 });
             }
             return user.ToArray();
@@ -485,7 +486,75 @@ namespace gamingProject
             sqlConnection.Close();
         }
 
+        // list all info of requests
+        [WebMethod(EnableSession = true)]
+        public Schedules[] ViewSchedulesUser()
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
 
+            DataTable sqlDt = new DataTable("Schedules");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, rank_tier, rank_division, role, pj2.users.gaming_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Schedules> schedule = new List<Schedules>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                schedule.Add(new Schedules
+                {
+                    request_id = Convert.ToInt32(sqlDt.Rows[i]["request_id"]),
+                    request_user = Convert.ToInt32(sqlDt.Rows[i]["request_user"]),
+                    request_partner = Convert.ToInt32(sqlDt.Rows[i]["request_partner"]),
+                    date = sqlDt.Rows[i]["date"].ToString(),
+                    time = sqlDt.Rows[i]["time"].ToString(),
+                    status = sqlDt.Rows[i]["status"].ToString(),
+                    request_gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    request_user_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
+                    request_user_division = sqlDt.Rows[i]["rank_division"].ToString(),
+                    request_user_role = sqlDt.Rows[i]["role"].ToString()
+                });
+            }
+            return schedule.ToArray();
+        }
+
+        [WebMethod(EnableSession = true)]
+        public Schedules[] ViewSchedulesPartner()
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            DataTable sqlDt = new DataTable("Schedules");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, rank_tier, rank_division, role, pj2.users.gaming_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_partner = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_user = '" + user_id + "' ORDER BY date;";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Schedules> schedule = new List<Schedules>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                schedule.Add(new Schedules
+                {
+                    request_id = Convert.ToInt32(sqlDt.Rows[i]["request_id"]),
+                    request_gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    request_partner_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
+                    request_partner_division = sqlDt.Rows[i]["rank_division"].ToString(),
+                    request_partner_role = sqlDt.Rows[i]["role"].ToString(),
+                    date = sqlDt.Rows[i]["date"].ToString(),
+                    time = sqlDt.Rows[i]["time"].ToString()
+                });
+            }
+            return schedule.ToArray();
+        }
         // list all users info
         //[WebMethod]
         //public Users[] ViewUsers()

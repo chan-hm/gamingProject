@@ -14,7 +14,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
+   
 
     <!--Font style-->
     <style>
@@ -32,6 +35,8 @@
 
     <script type="text/javascript">
         var username_ac = "";
+        var user_id_ac = 0;
+        //var request_num = 0;
 
         // displays the username on navbar
         function ViewUser() {
@@ -49,9 +54,11 @@
                     //console.log(infoArray);
 
                     var username = infoArray[0]["username"];
+                    var user_id = infoArray[0]["user_id"];
                     //console.log(username);
 
                     username_ac = username;
+                    user_id_ac = user_id;
 
                     document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
                 }
@@ -85,8 +92,56 @@
         }
 
         // displays all users who play the same game
-        function ListSchedule() {
-            var webMethod = "gamingProject.asmx/ViewPlayers";
+        function ListSchedules() {
+            var webMethod = "gamingProject.asmx/ViewSchedulesUser";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    //console.log(array);
+
+                    var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    for (var i = 0; i < infoArray.length; i++) {
+                        for (var i = 0; i < infoArray.length; i++) {
+                            var request_id = infoArray[i]["request_id"];
+                            var request_user = infoArray[i]["request_user"];
+                            var request_partner = infoArray[i]["request_partner"];
+                            var gaming_username = infoArray[i]["request_gaming_username"];
+                            var rank_tier = infoArray[i]["request_user_tier"];
+                            var rank_division = infoArray[i]["request_user_division"];
+                            var role = infoArray[i]["request_user_role"];
+                            var date = infoArray[i]["date"];
+                            var time = infoArray[i]["time"];
+
+                            // only need the date
+                            date = date.split(" ")[0];
+
+                            // only need hh:mm
+                            time = time.slice(0, 5);
+
+                            var table_body = $("#table_body_id");
+
+                            var tr_open = "<tr>";
+                            var username_col = tr_open + "<th scope='row'>" + gaming_username + "</th>";
+                            var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
+                            var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
+                            var role_col = rankDivision_col + "<td>" + role + "</td>";
+                            var date_col = role_col + "<td>" + date + "</td>";
+                            var time_col = date_col + "<td>" + time + "</td>";
+                            var tr_close = time_col + "</tr>";
+
+                            table_body.append(tr_close);
+                        }
+                    }
+                }
+            });
+
+            var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
 
             $.ajax({
                 type: "POST",
@@ -97,42 +152,41 @@
                     console.log(array);
 
                     var infoArray = array.d;
-                    console.log(infoArray);
+                    //console.log(infoArray);
 
                     for (var i = 0; i < infoArray.length; i++) {
                         for (var i = 0; i < infoArray.length; i++) {
-                            var user_id = infoArray[i]["user_id"];
-                            var username = infoArray[i]["username"];
-                            var rank_tier = infoArray[i]["rank_tier"];
-                            var rank_division = infoArray[i]["rank_division"];
-                            var role = infoArray[i]["role"];
+                            var request_id = infoArray[i]["request_id"];
+                            var partner_gaming_username = infoArray[i]["request_gaming_username"];
+                            var partner_tier = infoArray[i]["request_partner_tier"];
+                            var partner_division = infoArray[i]["request_partner_division"];
+                            var partner_role = infoArray[i]["request_partner_role"];
+                            var date = infoArray[i]["date"];
+                            var time = infoArray[i]["time"];
+
+                            // only need the date
+                            date = date.split(" ")[0];
+
+                            // only need hh:mm
+                            time = time.slice(0, 5);
 
                             var table_body = $("#table_body_id");
 
                             var tr_open = "<tr>";
-                            var username_col = tr_open + "<th scope='row'>" + username + "</th>";
-                            var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
-                            var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
-                            var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            //var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
-                            var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' data-toggle='modal' data-target='#requestModal' value='" + user_id + "' id='select_btn_id'>Select</button></td>";
-                            var tr_close = select_button + "</tr>";
+                            var username_col = tr_open + "<th scope='row'>" + partner_gaming_username + "</th>";
+                            var rankTier_col = username_col + "<td>" + partner_tier + "</td>";
+                            var rankDivision_col = rankTier_col + "<td>" + partner_division + "</td>";
+                            var role_col = rankDivision_col + "<td>" + partner_role + "</td>";
+                            var date_col = role_col + "<td>" + date + "</td>";
+                            var time_col = date_col + "<td>" + time + "</td>";
+                            var tr_close = time_col + "</tr>";
 
                             table_body.append(tr_close);
-
-                            //console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
-                    }
-
-                    if (infoArray.length == 0) {
-                        var table_body = $("#table_body_id");
-                        var nothing_displayed = "<tr><th scope='row'>No players at this moment.</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-                        table_body.append(nothing_displayed);
                     }
                 }
             });
         }
-
 
         $(document).ready(function () {
             // change color of the request button in nav bar
@@ -155,51 +209,22 @@
                     }
                 }
             });
+
+            // sort date in the table
+            //$("#schedule_table_id").DataTable({
+            //    "order": [[4, "asc"]]
+            //});
         });
 
-        // send a request to another user
-        function SubmitRequest() {
-            var webMethod = "gamingProject.asmx/SendRequest";
-            var dateTime = $("#playingTime_id").val();
-            /*console.log(dateTime);*/
 
-            var dateValue = dateTime.slice(0, 10);
-           /* console.log(dateValue);*/
 
-            var timeValue = dateTime.slice(11);
-            //console.log(timeValue);
+      
 
-            var parameters = { partner_id: $("#select_btn_id").val(), date: dateValue, time: timeValue  };
-            //console.log(parameters);
 
-            var json_data = JSON.stringify(parameters);
-            //console.log(json_data);
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: json_data,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    var responseFromServer = response.d;
-                    console.log(responseFromServer);
-
-                    if (responseFromServer == "pending request") {
-                        alert("Pending");
-                        //window.location.replace(".html");
-                    }
-                    else {
-                        alert("Not able to select this player.");
-                    }
-                }
-            })
-        }
     </script>
 </head>
 
-<body onload="ViewUser(), ListPlayers()">
+<body onload="ViewUser(), ListSchedules()">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
@@ -234,7 +259,7 @@
 
     <!--displays player table-->
     <div class="table-responsive-md px-md-5 ">
-        <table class="table table-striped table-dark">
+        <table class="table table-striped table-dark" id="schedule_table_id">
             <thead>
                 <tr>
                     <th scope="col">Gaming Username</th>
@@ -250,6 +275,7 @@
             </tbody>
         </table>
      </div>
+
 
 
 

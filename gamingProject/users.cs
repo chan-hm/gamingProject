@@ -15,6 +15,7 @@ namespace gamingProject
         public string rank_tier;
         public string rank_division;
         public string role;
-        public int partner;
+        public string gaming_username;
+
     }
 }

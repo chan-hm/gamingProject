@@ -132,7 +132,7 @@
 
                             table_body.append(tr_close);
 
-                            console.log(request_id, username, rank_tier, rank_division, role, date, time);
+                            console.log(request_id.toString(), username, rank_tier, rank_division, role, date, time);
 
                         }
                     }
@@ -193,6 +193,29 @@
                 }
             });
         }
+
+        $(document).ready(function () {
+            // change color of the request button in nav bar
+            var webMethod = "gamingProject.asmx/ViewRequests";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    //console.log(array);
+
+                    var infoArray = array.d;
+                    //console.log(infoArray);
+
+                    if (infoArray.length > 0) {
+                        //console.log(infoArray);
+                        $("#nav_notification_id").css("color", "red");
+                    }
+                }
+            });
+        });
        
     </script>
 </head>
