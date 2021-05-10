@@ -410,7 +410,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Requests");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.status = 'pending' AND pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "';";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.status = 'pending' AND pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -523,6 +523,7 @@ namespace gamingProject
             return schedule.ToArray();
         }
 
+        // display all players'info & scheduled playing time
         [WebMethod(EnableSession = true)]
         public Schedules[] ViewSchedulesPartner()
         {
@@ -555,62 +556,5 @@ namespace gamingProject
             }
             return schedule.ToArray();
         }
-        // list all users info
-        //[WebMethod]
-        //public Users[] ViewUsers()
-        //{
-        //    DataTable sqlDt = new DataTable("Users");
-
-        //    string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-        //    string sqlSelect = "SELECT * FROM pj2.users";
-
-        //    MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
-        //    MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-        //    MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-        //    sqlDa.Fill(sqlDt);
-
-        //    List<Users> user = new List<Users>();
-        //    for (int i = 0; i < sqlDt.Rows.Count; i++)
-        //    {
-        //        user.Add(new Users
-        //        {
-        //            user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
-        //            username = sqlDt.Rows[i]["username"].ToString(),
-        //            email = sqlDt.Rows[i]["email"].ToString(),
-        //            password = sqlDt.Rows[i]["password"].ToString(),
-        //        });
-        //    }
-        //    return user.ToArray();
-        //}
-
-        //// list the gamename_id & game_name the user selects
-        //[WebMethod]
-        //public Games[] SelectGame(string gameName)
-        //{
-        //    DataTable sqlDt = new DataTable("Games");
-
-        //    string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-        //    string sqlSelect = "SELECT * FROM pj2.gamesname WHERE game_name = @gameNameValue";
-
-        //    MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
-        //    MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-        //    sqlCommand.Parameters.AddWithValue("@gameNameValue", HttpUtility.UrlDecode(gameName));
-
-        //    MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-        //    sqlDa.Fill(sqlDt);
-
-        //    List<Games> game = new List<Games>();
-        //    for (int i = 0; i < sqlDt.Rows.Count; i++)
-        //    {
-        //        game.Add(new Games
-        //        {
-        //            name_id = Convert.ToInt32(sqlDt.Rows[i]["name_id"]),
-        //            game_name = sqlDt.Rows[i]["game_name"].ToString(),
-        //        });
-        //    }
-        //    return game.ToArray();
-        //}
     }
 }

@@ -106,6 +106,12 @@
                     var infoArray = array.d;
                     //console.log(infoArray);
 
+                    if (infoArray.length == 0) {
+                        var table_body = $("#table_body_id");
+                        var nothing_displayed = "<tr><th scope='row'>No scheduled date at this moment.</th><td></td><td></td><td></td><td></td><td></td></tr>";
+                        table_body.append(nothing_displayed);
+                    }
+
                     for (var i = 0; i < infoArray.length; i++) {
                         for (var i = 0; i < infoArray.length; i++) {
                             var request_id = infoArray[i]["request_id"];
@@ -281,7 +287,7 @@
                     <a class="nav-link ms-auto" id="nav_inbox_id" href="inbox.html"><i class="fa fa-inbox pe-md-2"></i>Messages</a>
                 </li>-->
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
+                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewSchedules.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
