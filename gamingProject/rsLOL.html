@@ -117,7 +117,7 @@
 
                             if (responseFromServer == "Tier, division, and role are saved") {
                                 alert("All saved.");
-                                // go to account info page
+                                window.location.replace("viewPlayers.html");
                             }
                             else {
                                 alert("Please select a tier, divison, and role.");
@@ -153,6 +153,9 @@
 
             <!--<div class="collapse navbar-collapse" id="navbaritems">-->
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
                 </li>

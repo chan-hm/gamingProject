@@ -188,3 +188,7 @@
     color: black;
 }
 
+/*View schedule */
+#sort_btn_id:hover {
+    cursor: pointer;
+}

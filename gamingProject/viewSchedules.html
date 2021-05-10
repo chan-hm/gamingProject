@@ -244,54 +244,23 @@
                 return (dateValue[2] + dateValue[0] + dateValue[1]);
         }
 
-       
+        var click = false;
 
         // rearrange the row order by date -- ASC
         function sortTable() {
             var table_body = $("#table_body_id")[0];
             var rows = ([].slice.call(document.getElementsByTagName("tr"))).slice(1); 
 
-            var click;
+            click = !click;
 
-           /* if (click) {*/
-                // x = row[i]; y = row[i+1]
-                rows.sort(function (x, y) {
-                    return (convertDate(x.cells[4].innerText) - convertDate(y.cells[4].innerText));
-                });
+            // x = row[i]; y = row[i+1]
+            rows.sort(function (x, y) {
+                return (click ? convertDate(x.cells[4].innerText) - convertDate(y.cells[4].innerText) : convertDate(y.cells[4].innerText) - convertDate(x.cells[4].innerText));
+            });
 
-                // loop thru rows list --> rows will move up & down
-                rows.forEach(r => table_body.appendChild(r));
-
-            //    click = false;
-            //}
-            
-            //else {
-            //    rows.reverse(function (x, y) {
-            //        return (convertDate(x.cells[4].innerText) - convertDate(y.cells[4].innerText));
-            //    });
-
-            //    rows.forEach(r => table_body.appendChild(r));
-
-            //    click = true;
-            //}
-
-           
-
+            // loop thru rows list --> rows will move up & down
+            rows.forEach(r => table_body.appendChild(r));             
         }
-
-        // rearrange the row order by date --DSC
-        //function sortDescTable() {
-        //    var table_body = $("#table_body_id")[0];
-        //    var rows = ([].slice.call(document.getElementsByTagName("tr"))).slice(1);
-
-        //    rows.reverse(function (x, y) {
-        //        return (convertDate(x.cells[4].innerText) - convertDate(y.cells[4].innerText));
-        //    });   
-
-        //    rows.forEach(r => table_body.appendChild(r));
-        //}
-
-          
 
     </script>
 </head>
@@ -311,6 +280,9 @@
                 <!--<li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_inbox_id" href="inbox.html"><i class="fa fa-inbox pe-md-2"></i>Messages</a>
                 </li>-->
+                <li class="nav-item">
+                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
                 </li>
