@@ -556,5 +556,31 @@ namespace gamingProject
             }
             return schedule.ToArray();
         }
+        
+        // reset info
+        [WebMethod(EnableSession = true)]
+        public void ResetInfo()
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE `pj2`.`users` SET `game_played` = null, `rank_tier` = null, `rank_division` = null, `role` = null WHERE(`user_id` = " + user_id + ");";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlConnection.Open();
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+            }
+            sqlConnection.Close();
+        }
+
     }
 }

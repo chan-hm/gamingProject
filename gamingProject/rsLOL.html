@@ -134,11 +134,34 @@
         });
 
         // not working !!!!!!!!!!!!!!!!!!!!!!!!
-        window.onbeforeunload = function () {
-            return "You have unsaved changes!";
-        }
+        //window.onbeforeunload = function () {
+        //    return "You have unsaved changes!";
+        //}
 
-       
+        // not working !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //window.addEventListener('beforeunload', function (event) {
+        //    event.preventDefault();
+        //    event.returnValue = '';
+        //});
+
+        //window.onbeforeunload = exit;
+
+        //function exit() {
+        //    var webMethod = "gamingProject.asmx/ResetInfo";
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function () {
+        //            alert("Reset!");
+        //        },
+        //        error: function () {
+        //            alert("Something went wrong.");
+        //        }
+        //    });
+        //}
 
     </script>
 </head>
