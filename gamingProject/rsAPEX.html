@@ -131,6 +131,27 @@
                     alert("Please select your rank tier and division, and the role that you play.");
                 }
             });
+
+            window.onbeforeunload = function () {
+                return "You have unsaved changes!";
+            }
+
+            window.onunload = function () {
+                var webMethod = "gamingProject.asmx/ResetInfo";
+
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                        alert("Reset!");
+                    },
+                    error: function () {
+                        alert("Something went wrong.");
+                    }
+                });
+            }
         });
     </script>
 </head>
@@ -148,17 +169,17 @@
             <!--<div class="collapse navbar-collapse" id="navbaritems">-->
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewSchedules.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
+                    <a class="nav-link ms-auto disabled" id="nav_notification_id" href="viewSchedules.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
+                    <a class="nav-link ms-auto disabled" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_username_id" href="editAccount.html"><i class="fa fa-user-circle-o pe-md-2"></i>USERNAME</a>
+                    <a class="nav-link ms-auto disabled" id="nav_username_id" href="editAccount.html"><i class="fa fa-user-circle-o pe-md-2"></i>USERNAME</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
+                    <a class="nav-link ms-auto disabled" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
                 </li>
             </ul>
             <!--</div>-->
