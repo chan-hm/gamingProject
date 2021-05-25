@@ -17,6 +17,13 @@
     <!--Font style-->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind:wght@500&display=swap');
+
+        /*bg*/
+        body {
+            background-image: url('home_bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+        }
     </style>
 
     <title>Matcher</title>
@@ -34,14 +41,15 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="home.html">Matcher</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbaritems" aria-controls="navbaritems" aria-expanded="false" aria-label="Toggle navigation">
+                <!--<span class="navbar-toggler-icon"></span>-->
+                <i class="fa fa-bars navbar-toggler-icon" aria-hidden="true"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbaritems">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link ms-auto" href="login.html">Register/ Sign up</a>
+                        <a class="nav-link active ms-auto" href="login.html">Register/ Sign up</a>
                     </li>
                 </ul>
             </div>
@@ -49,11 +57,14 @@
     </nav>
 
     <!--Parallax w/ Carousel Slides -- Gaming Partner-->
-    <div class="parallax px-md-0">
-        <div class="row mx-md-0"></div>
+    <div class="container px-md-0">
+        <div class="row mx-md-0">
+            <!--<h1 class="text-center pt-md-3">FIND YOUR GAMING PARTNER!</h1>-->
+            <p class="fs-1 text-center pt-md-3">FIND YOUR GAMING PARTNER!</p>
+        </div>
         <!--<div class="col-md-12 align-self-center"></div>-->
 
-        <div class="row h-100 mx-md-0">
+        <div class="row mx-md-0 pb-md-4">
             <div class="col-md-12 align-self-center">
                 <div class="bd-example">
                     <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel" data-interval="2500">
@@ -68,10 +79,6 @@
                                 <img src="lol_bg.jpg" class="d-block w-100 px-md-5" alt="lol">
 
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h1 class="text-center pt-md-0">FIND YOUR GAMING PARTNER!</h1>
-                                </div>
-
-                                <div class="carousel-caption d-none d-md-block">
                                     <button type="button" class="btn btn-primary btn-lg" onclick="redirect()">Start Now</button>
                                 </div>
                             </div>
@@ -80,20 +87,12 @@
                                 <img src="apex_bg.jpg" class="d-block w-100 px-md-5" alt="apex">
 
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h1 class="text-center pt-md-0">FIND YOUR GAMING PARTNER!</h1>
-                                </div>
-
-                                <div class="carousel-caption d-none d-md-block">
                                     <button type="button" class="btn btn-primary btn-lg" onclick="redirect()">Start Now</button>
                                 </div>
                             </div>
 
                             <div class="carousel-item">
                                 <img src="csgo_bg.jpg" class="d-block w-100 px-md-5" alt="csgo">
-
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h1 class="text-center pt-md-0">FIND YOUR GAMING PARTNER!</h1>
-                                </div>
 
                                 <div class="carousel-caption d-none d-md-block">
                                     <button type="button" class="btn btn-primary btn-lg" onclick="redirect()">Start Now</button>
@@ -110,6 +109,10 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
+                    </div>
+
+                    <div class="button-container text-center">
+                        <button type="button" class="btn btn-primary btn-md" id="start_btn_id" onclick="redirect()">Start Now</button>
                     </div>
                 </div>
             </div>
@@ -138,8 +141,8 @@
 
     <!--Footer-->
     <section class="footer">
-        <div class="container-fluid text-center px-md-3 ">
-            <div class="row pt-md-3 pb-md-0">
+        <div class="container-fluid text-center px-md-3">
+            <div class="row mx-md-0">
                 <div class="col-md-2 ">
                     <h1><a href="#">About Us</a></h1>
                 </div>

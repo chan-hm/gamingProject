@@ -28,6 +28,10 @@
     border-radius: 50%;
 }
 
+.nav-item {
+    text-align: center;
+}
+
 /*Navbar Title*/
 .navbar-brand {
     padding-left: 45%;
@@ -36,8 +40,7 @@
 .home_hr {
     background-color: white;
     width: 90%;
-    
-   /*  margin: 5vh 10vh;*/
+    /*  margin: 5vh 10vh;*/
 }
 
 /*Home*/
@@ -49,21 +52,32 @@
 
 /*Set the height of the slide img*/
 .carousel-inner img {
-    max-height: 90vh;
+    max-height: 80vh;
 }
 
+/*Start Now button*/
+.button-container {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .button-container {
+        display: block;
+        padding: 2vh 0;
+    }
+}
 /*Parallax effect*/
-.parallax {
+/*.parallax {
     background-image: url('home_bg.jpg');
     height: 100vh;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
+}*/
 
 /*Change the text color in parallax effect*/
-.parallax h1 {
+/*.parallax h1 {
     color: white;
     user-select: none;
 }
@@ -71,24 +85,15 @@
 .parallax p {
     font-size: 3vh;
     user-select: none;
-}
-
-.text-center a {
-    color: pink;
-}
-
-.text-center a:hover {
-    color: grey; 
-    text-decoration: none;
-}
+}*/
 
 /*Challenge CSS*/
-.parallax .col-md-4 {
+/*.parallax .col-md-4 {
     border: outset;
     border-color: pink;
-    padding: 8% 5%;
+    padding: 8% 5%;*/
     /*background-color: hsla(290,60%,70%,0.3);*/
-}
+/*}*/
 
 /*Footer CSS*/
 .footer {
@@ -113,6 +118,14 @@
     font-size: 2vh;
 }
 
+.text-center a {
+    color: pink;
+}
+
+.text-center a:hover {
+    color: grey; 
+    text-decoration: none;
+}
 /*Signup & Login*/
 /*Form CSS*/
 .form-group {
