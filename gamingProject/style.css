@@ -65,7 +65,18 @@
         display: block;
         padding: 2vh 0;
     }
+
+    .carousel-caption button {
+        display: none;
+    }
 }
+
+/*@media only screen and (max-width: 992px) {
+    .carousel-inner img {
+        max-height: 100vh;
+    }
+}*/
+
 /*Parallax effect*/
 /*.parallax {
     background-image: url('home_bg.jpg');
@@ -104,6 +115,7 @@
 .footer h1 {
     font-size: 2vh;
     margin: 3vh 0;
+    position: relative;
 }
 
 .copyright {
