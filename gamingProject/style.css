@@ -156,7 +156,7 @@
 
 .form-group label{
     color: black;
-    font-size: 3vh;
+    font-size: 1em;
     text-align: left;
 }
 
@@ -172,7 +172,59 @@
 .form_hr {
     background-color: black;
     width: 90%;
-    margin: 3vh 10vh;
+    margin: 1em 3em;
+}
+
+@media only screen and (max-width: 576px) {
+    .form_hr { 
+        margin: 0.5em 1em;
+    }
+
+    .form-group {
+        margin-top: 4em;
+    }
+
+    .form-group label {
+        margin-left: 2vh;
+    }
+
+    .form-control {
+        margin-left: 2vh;
+    }
+
+    #signup_btn_id, #login_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+    .form_hr {
+        margin: 1em 2em;
+    }
+
+    .form-group {
+        margin-top: 4em;
+    }
+
+    .form-group label {
+        margin-left: 2vh;
+    }
+
+    .form-control {
+        margin-left: 2vh;
+    }
+
+    #signup_btn_id, #login_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .form-group label {
+        margin-left: 0;
+    }
 }
 
 /*View games*/
