@@ -182,27 +182,27 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="viewPlayers.html">Matcher</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbaritems" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars navbar-toggler-icon" aria-hidden="true"></i>
             </button>
 
-            <!--<div class="collapse navbar-collapse" id="navbaritems">-->
-            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewSchedules.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_username_id" href="#"><i class="fa fa-user-circle-o pe-md-2"></i>USERNAME</a>
-                </li>
+            <div class="collapse navbar-collapse" id="navbaritems">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto" id="nav_schedule_id" href="viewSchedules.html"><i class="fa fa-calendar pe-sm-1 pe-md-2"></i>Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto" id="nav_requests_id" href="viewRequests.html"><i class="fa fa-bell pe-sm-1 pe-md-2"></i>Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto" id="nav_username_id" href="editAccount.html"><i class="fa fa-user-circle-o pe-sm-1 pe-md-2"></i>USERNAME</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link ms-auto" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
-                </li>
-            </ul>
-            <!--</div>-->
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
 
         </div>
     </nav>
@@ -210,12 +210,12 @@
     <!--Display user info -->
     <form class="form-group">
         <div class="row">
-            <h1 class="pt-md-4">Edit Account Info</h1>
+            <p class="fs-1 pt-md-4">Edit Account Info</p>
         </div>
 
         <hr class="form_hr">
 
-        <div class="row">
+        <div class="row my-md-2">
             <div class="col-md-2 col-form-label"></div>
             <label for="inputUsername" class="col-md-4 col-form-label">Username: </label>
 
@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-md-2">
             <div class="col-md-2 col-form-label"></div>
             <label for="inputEmail" class="col-md-4 col-form-label">Email: </label>
 
@@ -233,7 +233,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-md-2">
             <div class="col-md-2 col-form-label"></div>
             <label for="inputPassword" class="col-md-4 col-form-label">Password: </label>
 
@@ -244,7 +244,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-md-2">
             <div class="col-md-2 col-form-label"></div>
             <label for="inputGameUsername" class="col-md-4 col-form-label">Gaming Username : </label>
 
