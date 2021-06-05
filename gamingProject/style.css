@@ -186,6 +186,8 @@
 
     .form-group label {
         margin-left: 2vh;
+         margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 
     .form-control {
@@ -209,6 +211,8 @@
 
     .form-group label {
         margin-left: 2vh;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 
     .form-control {
@@ -230,6 +234,70 @@
 /*View games*/
 .card-title {
     color: black;
+}
+
+.card {
+    width: 20em;
+}
+
+@media only screen and (max-width: 576px) {
+    .card {
+        margin: 1em 3.5em;
+        width: 70%;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+    .card {
+        margin: 1em 5.5em;
+        width: 70%;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+    .card {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/*LOL ranking system*/
+#form_container_id {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#form_row_id {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media only screen and (max-width: 576px) {
+    #form_col_id {
+        padding-bottom: 1.5em;
+    }
+
+    #submit_btn_id {
+        margin-left: 40%;
+        margin-bottom: 5%;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+    #form_col_id {
+        padding-bottom: 1.5em;
+    }
+
+    #submit_btn_id {
+        margin-left: 45%;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1200px) {
+    #submit_btn_id {
+        margin-left: -3em;
+    }
 }
 
 /*Apex ranking system & CSGO ranking system*/
