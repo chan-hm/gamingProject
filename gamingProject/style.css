@@ -302,9 +302,15 @@
 
 /*Apex ranking system & CSGO ranking system*/
 #champion_rows_id, #rank_rows_id {
-    display: grid !important;
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1vh;
+}
+
+@media only screen and (max-width: 992px) {
+    #champion_rows_id, #rank_rows_id {
+        display: block !important;
+    }
 }
 
 /*Edit account*/

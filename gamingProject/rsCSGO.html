@@ -159,42 +159,42 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="viewPlayers.html">Matcher</a>
+            <a class="navbar-brand disabled" href="viewPlayers.html">Matcher</a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbaritems" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars navbar-toggler-icon" aria-hidden="true"></i>
             </button>
 
-            <!--<div class="collapse navbar-collapse" id="navbaritems">-->
-            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link ms-auto disabled" id="nav_notification_id" href="viewSchedules.html"><i class="fa fa-calendar pe-md-2"></i>Schedule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link ms-auto disabled" id="nav_notification_id" href="viewRequests.html"><i class="fa fa-bell pe-md-2"></i>Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link ms-auto disabled" id="nav_username_id" href="editAccount.html"><i class="fa fa-user-circle-o pe-md-2"></i>USERNAME</a>
-                </li>
+            <div class="collapse navbar-collapse" id="navbaritems">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto disabled" id="nav_schedule_id" href="viewSchedules.html"><i class="fa fa-calendar pe-sm-1 pe-md-2"></i>Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto disabled" id="nav_requests_id" href="viewRequests.html"><i class="fa fa-bell pe-sm-1 pe-md-2"></i>Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto disabled" id="nav_username_id" href="editAccount.html"><i class="fa fa-user-circle-o pe-sm-1 pe-md-2"></i>USERNAME</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link ms-auto disabled" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
-                </li>
-            </ul>
-            <!--</div>-->
+                    <li class="nav-item">
+                        <a class="nav-link ms-auto disabled" id="nav_logout_id" href="javascript: Logout();">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
 
         </div>
     </nav>
 
-    <h1 class="text-center pt-md-2">Select your current rank</h1>
+    <p class="fs-1 text-center pt-md-2">Select your current rank</p>
 
     <form>
         <!--Rank tier, divison & role-->
-        <div class="row pt-md-5 mx-md-0">
+        <div class="row pt-md-5 mx-md-0" id="form_row_id">
             <div class="col-md-1"></div>
 
-            <div class="col-md-10 form-group pt-md-2">
-                <div class="container-md mb-md-4">
+            <div class="col-md-10 form-group pt-md-2" id="form_col_id">
+                <div class="container-md mb-md-4" id="form_container_id">
                     <label for="inputRank">Rank</label>  
                     <ul class="list-group list-group-horizontal-md text-left" id="rank_rows_id">
                         <!--1st row-->
@@ -229,7 +229,7 @@
         </div>
 
         <!--Submit button-->
-        <div class="row  mx-md-0">
+        <div class="row  mx-md-0" id="form_row_id">
             <div class="col-md-5"></div>
 
             <div class="col-md-2 px-md-4 mx-md-5 pb-md-4">
