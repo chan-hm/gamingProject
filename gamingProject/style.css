@@ -360,11 +360,6 @@
 }
 
 /*View players*/
-#inputSearch_id {
-    width: 191vh;
-    margin-left: 6.5vh;
-}
-
 #requestModalLabel_id{
     color: black;
 }
@@ -375,6 +370,44 @@
 
 .close {
     color: black;
+}
+
+@media only screen and (max-width: 576px) {
+    #inputSearch_id {
+        margin-left: 0;
+    }
+
+    #table_id tr {
+        display: block;
+        border-bottom: 3px solid white;
+    }
+
+    #table_id td, #table_id th {
+        display: block;
+    }
+
+    #table_tr_id {
+        display: none !important;
+    }
+
+    #table_body_id tr td::before {
+        content: attr(data-title);
+    }
+
+    #table_body_id tr td::before {
+        display: inline-block;
+        width: 50%;
+        border-right: 2px dotted white;
+        margin-right: 1em;
+        font-weight: bold;
+    }  
+}
+
+
+@media only screen and (min-width: 576px) {
+    #inputSearch_id {
+        margin-left: 0;
+    }
 }
 
 /*View schedule */
