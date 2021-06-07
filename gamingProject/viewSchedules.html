@@ -146,12 +146,12 @@
                             var table_body = $("#table_body_id");
 
                             var tr_open = "<tr>";
-                            var username_col = tr_open + "<th scope='row'>" + gaming_username + "</th>";
-                            var rankTier_col = username_col + "<td>" + rank_tier + "</td>";
-                            var rankDivision_col = rankTier_col + "<td>" + rank_division + "</td>";
-                            var role_col = rankDivision_col + "<td>" + role + "</td>";
-                            var date_col = role_col + "<td>" + new_date + "</td>";
-                            var time_col = date_col + "<td>" + time + "</td>";
+                            var username_col = tr_open + "<td data-title='Gaming Username'>" + gaming_username + "</td>";
+                            var rankTier_col = username_col + "<td data-title='Rank Tier'>" + rank_tier + "</td>";
+                            var rankDivision_col = rankTier_col + "<td data-title='Rank Division'>" + rank_division + "</td>";
+                            var role_col = rankDivision_col + "<td data-title='Role'>" + role + "</td>";
+                            var date_col = role_col + "<td data-title='Date'>" + new_date + "</td>";
+                            var time_col = date_col + "<td data-title='Time'>" + time + "</td>";
                             var tr_close = time_col + "</tr>";
 
                             table_body.append(tr_close);
@@ -201,7 +201,7 @@
                                     var table_body = $("#table_body_id");
 
                                     var tr_open = "<tr>";
-                                    var username_col = tr_open + "<td data-title='Gaming Username'>" + partner_gaming_username + "</th>";
+                                    var username_col = tr_open + "<td data-title='Gaming Username'>" + partner_gaming_username + "</td>";
                                     var rankTier_col = username_col + "<td data-title='Rank Tier'>" + partner_tier + "</td>";
                                     var rankDivision_col = rankTier_col + "<td data-title='Rank Division'>" + partner_division + "</td>";
                                     var role_col = rankDivision_col + "<td data-title='Role'>" + partner_role + "</td>";
