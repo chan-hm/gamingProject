@@ -28,11 +28,13 @@ namespace gamingProject
         [WebMethod]
         public string CreateAccount(string username, string email, string password, string re_enter)
         {
+            var game_played = 0;
+
             // if password confirmation matches & email &/ username is never used, the account will be created
             if (password == re_enter)
             {
                 string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-                string sqlSelect = "INSERT INTO `pj2`.`users` (`username`, `email`, `password`) VALUES (@usernameValue, @emailValue, @passwordValue);";
+                string sqlSelect = "INSERT INTO `pj2`.`users` (`username`, `email`, `password`, `game_played`) VALUES (@usernameValue, @emailValue, @passwordValue, @gamePlayedValue);";
 
                 MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
                 MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -40,6 +42,7 @@ namespace gamingProject
                 sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
                 sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
                 sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
+                sqlCommand.Parameters.AddWithValue("@gamePlayedValue", Convert.ToInt32(game_played));
 
                 sqlConnection.Open();
                 try
@@ -104,6 +107,7 @@ namespace gamingProject
                 Session["game_played"] = sqlDt.Rows[0]["game_played"];
                 Session["rank_tier"] = sqlDt.Rows[0]["rank_tier"];
                 Session["rank_division"] = sqlDt.Rows[0]["rank_division"];
+                Session["role"] = sqlDt.Rows[0]["role"];
 
                 success = true;
             }
@@ -146,7 +150,8 @@ namespace gamingProject
                     username = sqlDt.Rows[i]["username"].ToString(),
                     email = sqlDt.Rows[i]["email"].ToString(),
                     password = sqlDt.Rows[i]["password"].ToString(),
-                    gaming_username = sqlDt.Rows[i]["gaming_username"].ToString()
+                    gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    game_played = Convert.ToInt32(sqlDt.Rows[i]["game_played"])
                 });
             }
             return user.ToArray();
@@ -171,6 +176,7 @@ namespace gamingProject
             try
             {
                 sqlCommand.ExecuteNonQuery();
+                Session["game_played"] = gameNum;
                 return "Added game_Played = " + gameNum + " into db";
             }
 
@@ -203,6 +209,9 @@ namespace gamingProject
             try
             {        
                 sqlCommand.ExecuteNonQuery();
+                Session["rank_tier"] = tier;
+                Session["rank_division"] = division;
+                Session["role"] = role;
                 return "Tier, division, and role are saved";
 
             }
@@ -234,6 +243,7 @@ namespace gamingProject
             try
             {
                 sqlCommand.ExecuteNonQuery();
+                Session["rank_tier"] = rank;
                 return "Rank is saved";
 
             }
@@ -255,7 +265,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Users");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played is NULL AND user_id = " + user_id + ";";
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played = 0 AND user_id = " + user_id + ";";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -315,7 +325,7 @@ namespace gamingProject
         public Users[] ViewPlayers()
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
-            var game_played = Session["game_played"];
+            var game_played = Convert.ToInt32(Session["game_played"]);
 
             DataTable sqlDt = new DataTable("Users");
 
@@ -564,7 +574,7 @@ namespace gamingProject
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `game_played` = null, `rank_tier` = null, `rank_division` = null, `role` = null WHERE(`user_id` = " + user_id + ");";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `game_played` = 0, `rank_tier` = null, `rank_division` = null, `role` = null WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);

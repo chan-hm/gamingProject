@@ -53,7 +53,7 @@
 
                     username_ac = username;
 
-                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
+                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-sm-1 pe-md-2"></i>' + username;
                 }
             });
         }
@@ -126,7 +126,7 @@
 
                     if (infoArray.length == 0) {
                         var table_body = $("#table_body_id");
-                        var nothing_displayed = "<tr><th scope='row'>No players at this moment.</th><td></td><td></td><td></td><td></td></tr>";
+                        var nothing_displayed = "<tr><th>No players at this moment.</th></tr>";
                         table_body.append(nothing_displayed);
                     }
                 }
@@ -212,32 +212,6 @@
                     }
                 }
             });
-
-            // add table heading in front of each col
-            var col_name = document.getElementById("table_tr_id");
-            var col_name_list = col_name.innerText.split("\n");
-            console.log(col_name_list);
-
-
-
-
-            //var col_name = document.getElementsByTagName("th");
-
-            //for (var i = 0; i < 5; i++) {
-            //    console.log(col_name[i].innerHTML);
-            //}
-
-
-            //$("#table_id").each(function (i) {
-            //    var id = $(this).attr("id");
-            //    $(this).find("th").each(function (i) {
-            //        $("#" + id + " td:nth-child(" + (i + 1) + ")").prepend("<span class='table-responsive-md-thead'>" + $(this).text() + ":</span> ");
-            //        $(".table-responsive-md-thead").hide();
-
-            //    });
-            //});
-
-
         });
 
         // be able to update the partner to db
@@ -313,7 +287,7 @@
     </script>
 </head>
 
-<body onload="ViewUser(), ListPlayers()">
+<body onload="ListPlayers(), ViewUser()">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
@@ -347,7 +321,7 @@
         </div>
     </nav>
 
-    <h1 class="text-center">Find your partner</h1>
+    <p class="fs-1 text-center">Find your partner</p>
 
     <!--<input class="form-control px-md-5" type="text" id="inputSearch_id" placeholder="Search for a Rank Tier, Rank Division, or Role.." title="Type in a rank tier, division, or role">-->
 

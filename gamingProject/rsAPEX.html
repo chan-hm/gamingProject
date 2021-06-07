@@ -47,7 +47,7 @@
                     var username = infoArray[0]["username"];
                     console.log(username);
 
-                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
+                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-sm-1 pe-md-2"></i>' + username;
                 }
             });
         }
@@ -132,9 +132,9 @@
                 }
             });
 
-            window.onbeforeunload = function () {
-                return "You have unsaved changes!";
-            }
+            //window.onbeforeunload = function () {
+            //    return "You have unsaved changes!";
+            //}
 
             window.onunload = function () {
                 var webMethod = "gamingProject.asmx/ResetInfo";
@@ -145,7 +145,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function () {
-                        alert("Reset!");
+                       /* alert("Reset!");*/
                     },
                     error: function () {
                         alert("Something went wrong.");
@@ -160,7 +160,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand disabled" href="viewPlayers.html">Matcher</a>
+            <a class="navbar-brand">Matcher</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbaritems" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars navbar-toggler-icon" aria-hidden="true"></i>

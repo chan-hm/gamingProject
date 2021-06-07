@@ -54,7 +54,7 @@
 
                     username_ac = username;
 
-                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-md-2"></i>' + username;
+                    document.getElementById("nav_username_id").innerHTML = '<i class="fa fa-user-circle-o pe-sm-1 pe-md-2"></i>' + username;
                 }
             });
         }
@@ -152,7 +152,7 @@
 
                     if (infoArray.length == 0) {
                         var table_body = $("#table_body_id");
-                        var nothing_displayed = "<tr><th scope='row'>No requests at this moment.</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                        var nothing_displayed = "<tr><th>No requests at this moment.</th></tr>";
                         table_body.append(nothing_displayed);
                     }
                 }
@@ -264,7 +264,7 @@
         </div>
     </nav>
 
-    <h1 class="text-center">View Requests</h1>
+    <p class="fs-1 text-center">View Requests</p>
 
     <!--displays player table-->
     <div class="table-responsive-md px-md-5 ">
