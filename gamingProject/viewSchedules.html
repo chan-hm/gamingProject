@@ -18,7 +18,6 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
    
-
     <!--Font style-->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind:wght@500&display=swap');
@@ -48,16 +47,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    //console.log(array);
-
                     var infoArray = array.d;
-                    console.log(infoArray);
-
                     var username = infoArray[0]["username"];
                     var user_id = infoArray[0]["user_id"];
-                   /* var game_num =*/
-                    //console.log(username);
-
+  
                     username_ac = username;
                     user_id_ac = user_id;
 
@@ -75,8 +68,6 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    //console.log(response);
-
                     var responseFromServer = response.d;
 
                     if (responseFromServer == false) {
@@ -102,8 +93,6 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    //console.log(array);
-
                     var infoArray = array.d;
                     //console.log(infoArray);
 
@@ -198,8 +187,6 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (array) {
-                                //console.log(array);
-
                                 var infoArray = array.d;
                                 //console.log(infoArray);
 
@@ -274,13 +261,10 @@
                                     var time_col = date_col + "<td data-title='Time'>" + time + "</td>";
                                     var tr_close = time_col + "</tr>";
 
-                                    table_body.append(tr_close);
-                                    //}
+                                    table_body.append(tr_close);    
                                 }
                             }
-                        });
-
-                       
+                        });   
                     }
                 }
             });
@@ -296,13 +280,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    //console.log(array);
-
                     var infoArray = array.d;
                     //console.log(infoArray);
 
                     if (infoArray.length > 0) {
-                        //console.log(infoArray);
                         $("#nav_requests_id").css("color", "red");
                     }
                 }
@@ -332,7 +313,6 @@
             // loop thru rows list --> rows will move up & down
             rows.forEach(r => table_body.appendChild(r));             
         }
-
     </script>
 </head>
 
@@ -347,10 +327,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbaritems">
-                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-                    <!--<li class="nav-item">
-                        <a class="nav-link ms-auto" id="nav_inbox_id" href="inbox.html"><i class="fa fa-inbox pe-md-2"></i>Messages</a>
-                    </li>-->
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">                 
                     <li class="nav-item">
                         <a class="nav-link ms-auto" id="nav_schedule_id" href="viewSchedules.html"><i class="fa fa-calendar pe-sm-1 pe-md-2"></i>Schedule</a>
                     </li>
@@ -392,20 +369,8 @@
         </table>
      </div>
 
-    <!--<button type="button" id="sort_btn_id" onclick="sortTable()">click</button>-->
-
-
-
-
-
-
-
-
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-
-
-
 </body>
 </html>

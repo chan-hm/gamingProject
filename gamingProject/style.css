@@ -16,10 +16,6 @@
     color: pink;
 }
 
-/*.nav-item a:hover {
-    color: pink;
-}*/
-
 .nav-item .badge {
     position: absolute;
     top: 3vh;
@@ -40,7 +36,6 @@
 .home_hr {
     background-color: white;
     width: 90%;
-    /*  margin: 5vh 10vh;*/
 }
 
 /*Home*/
@@ -60,92 +55,11 @@
     display: none;
 }
 
-@media only screen and (max-width: 576px) {
-    .container, .container-md, .container-sm {
-        max-width: 550px !important;
-    }
-
-    .navbar-brand {
-        padding-left: 40%;
-    }
-
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-    .button-container {
-        display: block;
-        padding: 2vh 0;
-    }
-
-    .carousel-caption button {
-        display: none;
-    }
-
-    .container, .container-md, .container-sm {
-        max-width: 700px !important;
-    }
-
-    .navbar-brand {
-        padding-left: 43%;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-    .container, .container-md, .container-sm {
-        max-width: 900px !important;
-    }
-
-    .navbar-brand {
-        padding-left: 46%;
-    }
-}
-
-/*@media only screen and (max-width: 992px) {
-    .carousel-inner img {
-        max-height: 100vh;
-    }
-}*/
-
-/*Parallax effect*/
-/*.parallax {
-    background-image: url('home_bg.jpg');
-    height: 100vh;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}*/
-
-/*Change the text color in parallax effect*/
-/*.parallax h1 {
-    color: white;
-    user-select: none;
-}
-
-.parallax p {
-    font-size: 3vh;
-    user-select: none;
-}*/
-
-/*Challenge CSS*/
-/*.parallax .col-md-4 {
-    border: outset;
-    border-color: pink;
-    padding: 8% 5%;*/
-    /*background-color: hsla(290,60%,70%,0.3);*/
-/*}*/
-
 /*Footer CSS*/
 .footer {
     background: black;
     color: white;
 }
-
-/*.footer h1 {
-    font-size: 2vh;
-    margin: 3vh 0;
-    position: relative;
-}*/
 
 .copyright {
     margin-bottom: -5vh;
@@ -167,6 +81,7 @@
     color: grey; 
     text-decoration: none;
 }
+
 /*Signup & Login*/
 /*Form CSS*/
 .form-group {
@@ -204,62 +119,6 @@
     margin: 1em 3em;
 }
 
-@media only screen and (max-width: 576px) {
-    .form_hr { 
-        margin: 0.5em 1em;
-    }
-
-    .form-group {
-        margin-top: 4em;
-    }
-
-    .form-group label {
-        margin-left: 2vh;
-         margin-top: 0.5em;
-        margin-bottom: 0.5em;
-    }
-
-    .form-control {
-        margin-left: 2vh;
-    }
-
-    #signup_btn_id, #login_btn_id {
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-    }
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-    .form_hr {
-        margin: 1em 2em;
-    }
-
-    .form-group {
-        margin-top: 4em;
-    }
-
-    .form-group label {
-        margin-left: 2vh;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-    }
-
-    .form-control {
-        margin-left: 2vh;
-    }
-
-    #signup_btn_id, #login_btn_id {
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .form-group label {
-        margin-left: 0;
-    }
-}
-
 /*View games*/
 .card-title {
     color: black;
@@ -267,28 +126,6 @@
 
 .card {
     width: 20em;
-}
-
-@media only screen and (max-width: 576px) {
-    .card {
-        margin: 1em 3.5em;
-        width: 70%;
-    }
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-    .card {
-        margin: 1em 5.5em;
-        width: 70%;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1200px) {
-    .card {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-    }
 }
 
 /*LOL ranking system*/
@@ -302,44 +139,11 @@
     margin-right: 0;
 }
 
-@media only screen and (max-width: 576px) {
-    #form_col_id {
-        padding-bottom: 1.5em;
-    }
-
-    #submit_btn_id {
-        margin-left: 40%;
-        margin-bottom: 5%;
-    }
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-    #form_col_id {
-        padding-bottom: 1.5em;
-    }
-
-    #submit_btn_id {
-        margin-left: 45%;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width:1200px) {
-    #submit_btn_id {
-        margin-left: -3em;
-    }
-}
-
 /*Apex ranking system & CSGO ranking system*/
 #champion_rows_id, #rank_rows_id {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1vh;
-}
-
-@media only screen and (max-width: 992px) {
-    #champion_rows_id, #rank_rows_id {
-        display: block !important;
-    }
 }
 
 /*Edit account*/
@@ -348,48 +152,6 @@
     position: absolute;
     cursor: pointer;
     margin-left: 6em;
-}
-
-@media only screen and (max-width: 576px) {
-    #eye_fill_id {
-        margin-left: 4em;
-    }
-
-    #save_btn_id {
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-    }
-
-    .nav-item i {
-        padding-right: 0.5em;
-    }
-}
-
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-    #eye_fill_id {
-        margin-left: 6em;
-    }
-
-    #save_btn_id {
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-    }
-
-    .nav-item i {
-        padding-right: 0.5em;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-    #eye_fill_id {
-        margin-left: 3em;
-    }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
-    #eye_fill_id {
-        margin-left: 4em;
-    }
 }
 
 /*View players*/
@@ -405,7 +167,185 @@
     color: black;
 }
 
+/*View schedule */
+#sort_btn_id:hover {
+    cursor: pointer;
+}
+
+// Responsive CSS
+@media only screen and (min-width: 576px) {
+    /*View players*/
+    #inputSearch_id
+
+{
+    margin-left: 0;
+}
+
+}
+
+@media only screen and (max-width: 576px) {
+    /*Home*/
+    .container, .container-md, .container-sm {
+        max-width: 550px !important;
+    }
+
+    .navbar-brand {
+        padding-left: 40%;
+    }
+
+    /*Signup & Login*/
+    .form_hr {
+        margin: 0.5em 1em;
+    }
+
+    .form-group {
+        margin-top: 4em;
+    }
+
+        .form-group label {
+            margin-left: 2vh;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+    .form-control {
+        margin-left: 2vh;
+    }
+
+    #signup_btn_id, #login_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    /*View games*/
+    .card {
+        margin: 1em 3.5em;
+        width: 70%;
+    }
+
+    /*LOL ranking system*/
+    #form_col_id {
+        padding-bottom: 1.5em;
+    }
+
+    #submit_btn_id {
+        margin-left: 40%;
+        margin-bottom: 5%;
+    }
+
+    /*Edit account*/
+    #eye_fill_id {
+        margin-left: 4em;
+    }
+
+    #save_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .nav-item i {
+        padding-right: 0.5em;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+    /*Home*/
+    .button-container {
+        display: block;
+        padding: 2vh 0;
+    }
+
+    .carousel-caption button {
+        display: none;
+    }
+
+    .container, .container-md, .container-sm {
+        max-width: 700px !important;
+    }
+
+    .navbar-brand {
+        padding-left: 43%;
+    }
+
+    /*Signup & Login*/
+    .form_hr {
+        margin: 1em 2em;
+    }
+
+    .form-group {
+        margin-top: 4em;
+    }
+
+        .form-group label {
+            margin-left: 2vh;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+    .form-control {
+        margin-left: 2vh;
+    }
+
+    #signup_btn_id, #login_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    /*View games*/
+    .card {
+        margin: 1em 5.5em;
+        width: 70%;
+    }
+
+    /*LOL ranking system*/
+    #form_col_id {
+        padding-bottom: 1.5em;
+    }
+
+    #submit_btn_id {
+        margin-left: 45%;
+    }
+
+    /*Edit account*/
+    #eye_fill_id {
+        margin-left: 6em;
+    }
+
+    #save_btn_id {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .nav-item i {
+        padding-right: 0.5em;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    /*Home*/
+    .container, .container-md, .container-sm {
+        max-width: 900px !important;
+    }
+
+    .navbar-brand {
+        padding-left: 46%;
+    }
+
+    /*Edit account*/
+    #eye_fill_id {
+        margin-left: 3em;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /*Signup & Login*/
+    .form-group label {
+        margin-left: 0;
+    }
+}
+
 @media only screen and (max-width: 768px) {
+    /*View players*/
     #inputSearch_id {
         margin-left: 0;
     }
@@ -433,17 +373,33 @@
         border-right: 2px dotted white;
         margin-right: 1em;
         font-weight: bold;
-    }  
-}
-
-
-@media only screen and (min-width: 576px) {
-    #inputSearch_id {
-        margin-left: 0;
     }
 }
 
-/*View schedule */
-#sort_btn_id:hover {
-    cursor: pointer;
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+    /*View games*/
+    .card {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /*LOL ranking system*/
+    #submit_btn_id {
+        margin-left: -3em;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    /*Apex ranking system & CSGO ranking system*/
+    #champion_rows_id, #rank_rows_id {
+        display: block !important;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    /*Edit account*/
+    #eye_fill_id {
+        margin-left: 4em;
+    }
 }

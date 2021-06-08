@@ -655,12 +655,6 @@ namespace gamingProject
                 });
             }
             return user.ToArray();
-
-
         }
-
-
-
-
     }
 }

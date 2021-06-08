@@ -44,13 +44,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    //console.log(array);
-
                     var infoArray = array.d;
                     //console.log(infoArray);
 
                     var username = infoArray[0]["username"];
-                    //console.log(username);
 
                     username_ac = username;
 
@@ -68,8 +65,6 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    //console.log(response);
-
                     var responseFromServer = response.d;
 
                     if (responseFromServer == false) {
@@ -95,10 +90,8 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    console.log(array);
-
                     var infoArray = array.d;
-                    console.log(infoArray);
+                    //console.log(infoArray);
 
                     var game_name;
 
@@ -125,7 +118,6 @@
                             else if (game_num == 3) {
                                 game_name = "CS GO";
                             }
-
 
                             request_num = request_id;
 
@@ -162,9 +154,6 @@
                             var tr_close = buttons + "</tr>";
 
                             table_body.append(tr_close);
-
-                            //console.log(request_id.toString(), username, rank_tier, rank_division, role, date, time);
-
                         }
                     }
 
@@ -180,10 +169,7 @@
         function Accept(num) {
             var webMethod = "gamingProject.asmx/AcceptRequest";
             var parameters = { request_id: num };
-            console.log(parameters);
-
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -204,10 +190,8 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (array) {
-                            console.log(array);
-
                             var infoArray = array.d;
-                            console.log(infoArray);
+                            //console.log(infoArray);
 
                             if (infoArray.length == 1) {
                                 alert("Please enter you real username in the game.");
@@ -216,11 +200,8 @@
                             else {
                                 window.location.replace("viewSchedules.html");
                             }
-
-
                         }
-                    });
-                    
+                    });                
                 },
                 error: function () {
                     alert("Something went wrong.");
@@ -231,10 +212,7 @@
         function Deny(num) {
             var webMethod = "gamingProject.asmx/DenyRequest";
             var parameters = { request_id: num };
-            console.log(parameters);
-
             var json_data = JSON.stringify(parameters);
-            console.log(json_data);
 
             $.ajax({
                 type: "POST",
@@ -255,10 +233,8 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (array) {
-                            console.log(array);
-
                             var infoArray = array.d;
-                            console.log(infoArray);
+                            //console.log(infoArray);
 
                             if (infoArray.length == 1) {
                                 alert("Please enter you real username in the game.");
@@ -267,8 +243,6 @@
                             else {
                                 window.location.replace("viewSchedules.html");
                             }
-
-
                         }
                     });
                 },
@@ -288,19 +262,15 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (array) {
-                    //console.log(array);
-
                     var infoArray = array.d;
                     //console.log(infoArray);
 
                     if (infoArray.length > 0) {
-                        //console.log(infoArray);
                         $("#nav_requests_id").css("color", "red");
                     }
                 }
             });
-        });
-       
+        });   
     </script>
 </head>
 
@@ -331,7 +301,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
     </nav>
 
@@ -358,17 +327,8 @@
         </table>
     </div>
 
-
-
-
-
-
-
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-
-
-
 </body>
 </html>
