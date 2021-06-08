@@ -426,7 +426,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Requests");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.status = 'pending' AND pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, username, rank_tier, rank_division, role FROM pj2.requests, pj2.users WHERE pj2.requests.status = 'pending' AND pj2.requests.request_user = pj2.users.user_id AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -448,7 +448,8 @@ namespace gamingProject
                     username = sqlDt.Rows[i]["username"].ToString(),
                     request_user_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
                     request_user_division = sqlDt.Rows[i]["rank_division"].ToString(),
-                    request_user_role = sqlDt.Rows[i]["role"].ToString()
+                    request_user_role = sqlDt.Rows[i]["role"].ToString(),
+                    game_num = Convert.ToInt32(sqlDt.Rows[i]["game_num"])
                 });
             }
             return request.ToArray();
@@ -511,7 +512,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Schedules");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date, time;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -551,7 +552,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Schedules");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_partner = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_user = '" + user_id + "' ORDER BY date;";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_partner = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_user = '" + user_id + "' ORDER BY date, time;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);

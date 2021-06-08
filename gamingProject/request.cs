@@ -17,5 +17,6 @@ namespace gamingProject
         public string request_user_tier;
         public string request_user_division;
         public string request_user_role;
+        public int game_num;
     }
 }
