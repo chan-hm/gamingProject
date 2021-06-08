@@ -128,12 +128,12 @@ namespace gamingProject
         [WebMethod(EnableSession = true)]
         public Users[] ViewUser()
         {
-            var username = Session["username"];
+            var user_id = Convert.ToInt32(Session["user_id"]);
 
             DataTable sqlDt = new DataTable("Users");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT * FROM pj2.users WHERE username = '" + username + "';";
+            string sqlSelect = "SELECT * FROM pj2.users WHERE user_id = '" + user_id + "';";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -150,7 +150,9 @@ namespace gamingProject
                     username = sqlDt.Rows[i]["username"].ToString(),
                     email = sqlDt.Rows[i]["email"].ToString(),
                     password = sqlDt.Rows[i]["password"].ToString(),
-                    gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    lol_username = sqlDt.Rows[i]["lol_username"].ToString(),
+                    apex_username = sqlDt.Rows[i]["apex_username"].ToString(),
+                    csgo_username = sqlDt.Rows[i]["csgo_username"].ToString(),
                     game_played = Convert.ToInt32(sqlDt.Rows[i]["game_played"])
                 });
             }
@@ -289,12 +291,12 @@ namespace gamingProject
 
         // allows users to change their account info
         [WebMethod(EnableSession = true)]
-        public string SaveInfo(string username, string email, string password, string gaming_username)
+        public string SaveInfo(string username, string email, string password, string lol_username, string apex_username, string csgo_username)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "UPDATE `pj2`.`users` SET `username` = (@usernameValue), `email` = (@emailValue), `password` = (@passwordValue), `gaming_username` = (@gamingUsernameValue) WHERE(`user_id` = " + user_id + ");";
+            string sqlSelect = "UPDATE `pj2`.`users` SET `username` = (@usernameValue), `email` = (@emailValue), `password` = (@passwordValue), `lol_username` = (@lolUsernameValue), `apex_username` = (@apexUsernameValue), `csgo_username` = (@csgoUsernameValue) WHERE(`user_id` = " + user_id + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -302,7 +304,9 @@ namespace gamingProject
             sqlCommand.Parameters.AddWithValue("@usernameValue", HttpUtility.UrlDecode(username));
             sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
             sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
-            sqlCommand.Parameters.AddWithValue("@gamingUsernameValue", HttpUtility.UrlDecode(gaming_username));
+            sqlCommand.Parameters.AddWithValue("@lolUsernameValue", HttpUtility.UrlDecode(lol_username));
+            sqlCommand.Parameters.AddWithValue("@apexUsernameValue", HttpUtility.UrlDecode(apex_username));
+            sqlCommand.Parameters.AddWithValue("@csgoUsernameValue", HttpUtility.UrlDecode(csgo_username));
 
             sqlConnection.Open();
 
@@ -388,9 +392,11 @@ namespace gamingProject
         public string SendRequest( int partner_id, string date, string time)
         {
             var user_id = Convert.ToInt32(Session["user_id"]);
+            var game_played = Convert.ToInt32(Session["game_played"]);
+
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "INSERT INTO `pj2`.`requests` (`request_user`, `request_partner`, `date`, `time`, `status`) VALUES('" + user_id + "', '" + partner_id + "', '" + date + "', '" + time + "', 'pending');";
+            string sqlSelect = "INSERT INTO `pj2`.`requests` (`request_user`, `request_partner`, `date`, `time`, `status`, `game_num`) VALUES('" + user_id + "', '" + partner_id + "', '" + date + "', '" + time + "', 'pending'," + game_played + ");";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -505,7 +511,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Schedules");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, rank_tier, rank_division, role, pj2.users.gaming_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_user = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_partner = '" + user_id + "' ORDER BY date;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -524,10 +530,13 @@ namespace gamingProject
                     date = sqlDt.Rows[i]["date"].ToString(),
                     time = sqlDt.Rows[i]["time"].ToString(),
                     status = sqlDt.Rows[i]["status"].ToString(),
-                    request_gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    request_lol_username = sqlDt.Rows[i]["lol_username"].ToString(),
+                    request_apex_username = sqlDt.Rows[i]["apex_username"].ToString(),
+                    request_csgo_username = sqlDt.Rows[i]["csgo_username"].ToString(),
                     request_user_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
                     request_user_division = sqlDt.Rows[i]["rank_division"].ToString(),
-                    request_user_role = sqlDt.Rows[i]["role"].ToString()
+                    request_user_role = sqlDt.Rows[i]["role"].ToString(),
+                    game_num = Convert.ToInt32(sqlDt.Rows[i]["game_num"])
                 });
             }
             return schedule.ToArray();
@@ -542,7 +551,7 @@ namespace gamingProject
             DataTable sqlDt = new DataTable("Schedules");
 
             string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, rank_tier, rank_division, role, pj2.users.gaming_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_partner = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_user = '" + user_id + "' ORDER BY date;";
+            string sqlSelect = "SELECT request_id, request_user, request_partner, date, time, status, game_num, rank_tier, rank_division, role, pj2.users.lol_username, pj2.users.apex_username, pj2.users.csgo_username FROM pj2.requests, pj2.users WHERE pj2.requests.request_partner = pj2.users.user_id AND pj2.requests.status = 'accept' AND pj2.requests.request_user = '" + user_id + "' ORDER BY date;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -556,12 +565,15 @@ namespace gamingProject
                 schedule.Add(new Schedules
                 {
                     request_id = Convert.ToInt32(sqlDt.Rows[i]["request_id"]),
-                    request_gaming_username = sqlDt.Rows[i]["gaming_username"].ToString(),
+                    request_lol_username = sqlDt.Rows[i]["lol_username"].ToString(),
+                    request_apex_username = sqlDt.Rows[i]["apex_username"].ToString(),
+                    request_csgo_username = sqlDt.Rows[i]["csgo_username"].ToString(),
                     request_partner_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
                     request_partner_division = sqlDt.Rows[i]["rank_division"].ToString(),
                     request_partner_role = sqlDt.Rows[i]["role"].ToString(),
                     date = sqlDt.Rows[i]["date"].ToString(),
-                    time = sqlDt.Rows[i]["time"].ToString()
+                    time = sqlDt.Rows[i]["time"].ToString(),
+                    game_num = Convert.ToInt32(sqlDt.Rows[i]["game_num"])
                 });
             }
             return schedule.ToArray();
@@ -591,6 +603,63 @@ namespace gamingProject
             }
             sqlConnection.Close();
         }
+
+        // check null gaming username
+        [WebMethod(EnableSession = true)]
+        public Users[] CheckNullGamingUsername()
+        {
+            var user_id = Convert.ToInt32(Session["user_id"]);
+            var game_played = Convert.ToInt32(Session["game_played"]);
+            var gaming_username = "";
+
+            if (game_played == 1)
+            {
+                gaming_username = "lol_username";
+            }
+
+            else if (game_played == 2)
+            {
+                gaming_username = "apex_username";
+            }
+            else if (game_played == 3)
+            {
+                gaming_username = "csgo_username";
+            }
+
+            DataTable sqlDt = new DataTable("Users");
+
+            string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT * FROM pj2.users WHERE game_played = " + game_played + " AND user_id = " + user_id + " AND (" + gaming_username + " IS NULL OR " + gaming_username + " = 'N/A');";
+            
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Users> user = new List<Users>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                user.Add(new Users
+                {
+                    user_id = Convert.ToInt32(sqlDt.Rows[i]["user_id"]),
+                    username = sqlDt.Rows[i]["username"].ToString(),
+                    game_played = Convert.ToInt32(sqlDt.Rows[i]["game_played"]),
+                    rank_tier = sqlDt.Rows[i]["rank_tier"].ToString(),
+                    rank_division = sqlDt.Rows[i]["rank_division"].ToString(),
+                    role = sqlDt.Rows[i]["role"].ToString(),
+                    lol_username = sqlDt.Rows[i]["lol_username"].ToString(),
+                    apex_username = sqlDt.Rows[i]["apex_username"].ToString(),
+                    csgo_username = sqlDt.Rows[i]["csgo_username"].ToString(),
+                });
+            }
+            return user.ToArray();
+
+
+        }
+
+
+
 
     }
 }

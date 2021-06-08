@@ -64,6 +64,11 @@
     .container, .container-md, .container-sm {
         max-width: 550px !important;
     }
+
+    .navbar-brand {
+        padding-left: 40%;
+    }
+
 }
 
 @media only screen and (min-width: 576px) and (max-width: 768px) {
@@ -79,11 +84,19 @@
     .container, .container-md, .container-sm {
         max-width: 700px !important;
     }
+
+    .navbar-brand {
+        padding-left: 43%;
+    }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 992px) {
     .container, .container-md, .container-sm {
         max-width: 900px !important;
+    }
+
+    .navbar-brand {
+        padding-left: 46%;
     }
 }
 
@@ -128,11 +141,11 @@
     color: white;
 }
 
-.footer h1 {
+/*.footer h1 {
     font-size: 2vh;
     margin: 3vh 0;
     position: relative;
-}
+}*/
 
 .copyright {
     margin-bottom: -5vh;

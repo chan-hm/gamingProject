@@ -140,7 +140,7 @@
                             var role_col = rankDivision_col + "<td data-title='Role'>" + role + "</td>";
                             var date_col = role_col + "<td data-title='Date'>" + new_date + "</td>";
                             var time_col = date_col + "<td data-title='Time'>" + time + "</td>";
-                            var buttons = time_col + "<td data-title='Accept/ Deny'><button type='button' class='btn btn-secondary btn-md' id='deny_btn_id' onclick='Deny()'>Deny</button> <button type='button' class='btn btn-success btn-md' id='accept_btn_id' onclick='Accept()'>Accept</button>";
+                            var buttons = time_col + "<td data-title='Accept/ Deny'><button type='button' class='btn btn-secondary btn-md' id='deny_btn_id' onclick='Deny(" + request_num + ")'>Deny</button> <button type='button' class='btn btn-success btn-md' id='accept_btn_id' onclick='Accept(" + request_num + ")'>Accept</button>";
                             var tr_close = buttons + "</tr>";
 
                             table_body.append(tr_close);
@@ -159,9 +159,9 @@
             });
         }
 
-        function Accept() {
+        function Accept(num) {
             var webMethod = "gamingProject.asmx/AcceptRequest";
-            var parameters = { request_id: request_num };
+            var parameters = { request_id: num };
             console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
@@ -174,7 +174,34 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function () {
-                    alert("Accepted!");
+                    //alert("Accepted!");
+                    $("#accept_btn_id").prop("disabled", true);
+                    $("#deny_btn_id").prop("disabled", true);
+
+                    var webMethod = "gamingProject.asmx/CheckNullGamingUsername";
+
+                    $.ajax({
+                        type: "POST",
+                        url: webMethod,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (array) {
+                            console.log(array);
+
+                            var infoArray = array.d;
+                            console.log(infoArray);
+
+                            if (infoArray.length == 1) {
+                                alert("Please enter you real username in the game.");
+                                window.location.replace("editAccount.html");
+                            }
+                            else {
+                                window.location.replace("viewSchedules.html");
+                            }
+
+
+                        }
+                    });
                     
                 },
                 error: function () {
@@ -183,9 +210,9 @@
             });
         }
 
-        function Deny() {
+        function Deny(num) {
             var webMethod = "gamingProject.asmx/DenyRequest";
-            var parameters = { request_id: request_num };
+            var parameters = { request_id: num };
             console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
@@ -198,8 +225,34 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function () {
-                    alert("Denied!");
+                    /*alert("Denied!");*/
+                    $("#accept_btn_id").prop("disabled", true);
+                    $("#deny_btn_id").prop("disabled", true);
 
+                    var webMethod = "gamingProject.asmx/CheckNullGamingUsername";
+
+                    $.ajax({
+                        type: "POST",
+                        url: webMethod,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (array) {
+                            console.log(array);
+
+                            var infoArray = array.d;
+                            console.log(infoArray);
+
+                            if (infoArray.length == 1) {
+                                alert("Please enter you real username in the game.");
+                                window.location.replace("editAccount.html");
+                            }
+                            else {
+                                window.location.replace("viewSchedules.html");
+                            }
+
+
+                        }
+                    });
                 },
                 error: function () {
                     alert("Something went wrong.");

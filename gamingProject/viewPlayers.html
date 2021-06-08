@@ -32,6 +32,7 @@
 
     <script type="text/javascript">
         var username_ac = "";
+        var partner_user_id;
 
         // displays the username on navbar
         function ViewUser() {
@@ -115,12 +116,12 @@
                             var rankDivision_col = rankTier_col + "<td data-title='Rank Division'>" + rank_division + "</td>";
                             var role_col = rankDivision_col + "<td data-title='Role'>" + role + "</td>";
                             //var select_button = role_col + "<td><button type='button' class='btn btn-primary btn-md' id='select_btn_id' value='" + user_id + "' onclick='SelectPartner(this.value)'>Select</button></td>";
-                            var select_button = role_col + "<td data-title='Select Your Partner'><button type='button' class='btn btn-primary btn-md' data-toggle='modal' data-target='#requestModal' value='" + user_id + "' id='select_btn_id'>Select</button></td>";
+                            var select_button = role_col + "<td data-title='Select Your Partner'><button type='button' class='btn btn-primary btn-md' data-toggle='modal' data-target='#requestModal' value='" + user_id + "' id='select_btn_id' onclick='Pass(this.value)'>Select</button></td>";
                             var tr_close = select_button + "</tr>";
 
                             table_body.append(tr_close);
 
-                            //console.log(user_id.toString(), username, rank_tier, rank_division, role);
+                            console.log(user_id.toString(), username, rank_tier, rank_division, role);
                         }
                     }
 
@@ -134,6 +135,13 @@
         }
 
         
+
+        function Pass(value) {
+            partner_user_id = value;
+            console.log(value);
+        }
+
+
         $(document).ready(function () {
             // allows users to search for tier/ division/ role
             // onkeyup -- occurs when the user releases a key
@@ -211,7 +219,7 @@
                         $("#nav_requests_id").css("color", "red");
                     }
                 }
-            });
+            });    
         });
 
         // be able to update the partner to db
@@ -257,8 +265,8 @@
             var timeValue = dateTime.slice(11);
             //console.log(timeValue);
 
-            var parameters = { partner_id: $("#select_btn_id").val(), date: dateValue, time: timeValue  };
-            //console.log(parameters);
+            var parameters = { partner_id: partner_user_id, date: dateValue, time: timeValue };
+            console.log(parameters);
 
             var json_data = JSON.stringify(parameters);
             //console.log(json_data);
@@ -272,11 +280,38 @@
                 success: function (response) {
                     console.log(response);
                     var responseFromServer = response.d;
-                    console.log(responseFromServer);
+                    //console.log(responseFromServer);
 
                     if (responseFromServer == "pending request") {
-                        alert("Please enter you real username in the game.");
-                        window.location.replace("editAccount.html");
+                        var webMethod = "gamingProject.asmx/CheckNullGamingUsername";
+
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (array) {
+                                console.log(array);
+
+                                var infoArray = array.d;
+                                console.log(infoArray);
+
+                                if (infoArray.length == 1) {
+                                    alert("Please enter you real username in the game.");
+                                    window.location.replace("editAccount.html");
+                                }
+                                else {
+                                    window.location.replace("viewSchedules.html");
+                                }
+
+                                
+                            }
+                        });
+
+
+
+                        //alert("Please enter you real username in the game.");
+                        //window.location.replace("editAccount.html");
                     }
                     else {
                         alert("Not able to select this player.");

@@ -15,7 +15,8 @@ namespace gamingProject
         public string rank_tier;
         public string rank_division;
         public string role;
-        public string gaming_username;
-
+        public string lol_username;
+        public string apex_username;
+        public string csgo_username;
     }
 }

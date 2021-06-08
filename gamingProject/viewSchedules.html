@@ -51,10 +51,11 @@
                     //console.log(array);
 
                     var infoArray = array.d;
-                    //console.log(infoArray);
+                    console.log(infoArray);
 
                     var username = infoArray[0]["username"];
                     var user_id = infoArray[0]["user_id"];
+                   /* var game_num =*/
                     //console.log(username);
 
                     username_ac = username;
@@ -117,12 +118,17 @@
                             var request_id = infoArray[i]["request_id"];
                             var request_user = infoArray[i]["request_user"];
                             var request_partner = infoArray[i]["request_partner"];
-                            var gaming_username = infoArray[i]["request_gaming_username"];
+                            var lol_username = infoArray[i]["request_lol_username"];
+                            var apex_username = infoArray[i]["request_apex_username"];
+                            var csgo_username = infoArray[i]["request_csgo_username"];
                             var rank_tier = infoArray[i]["request_user_tier"];
                             var rank_division = infoArray[i]["request_user_division"];
                             var role = infoArray[i]["request_user_role"];
                             var date = infoArray[i]["date"];
                             var time = infoArray[i]["time"];
+                            var game_num = infoArray[i]["game_num"];
+
+                            var gaming_username;
 
                             // only need the date
                             date = date.split(" ")[0];
@@ -142,6 +148,19 @@
 
                             // only need hh:mm
                             time = time.slice(0, 5);
+
+                            // get gaming username based on game num
+                            if (game_num == 1) {
+                                gaming_username = lol_username;
+                            }
+
+                            else if (game_num == 2) {
+                                gaming_username = apex_username;
+                            }
+
+                            else if (game_num == 3) {
+                                gaming_username = csgo_username;
+                            }
 
                             var table_body = $("#table_body_id");
 
@@ -173,12 +192,17 @@
                                 for (var i = 0; i < infoArray.length; i++) {
                                     //for (var i = 0; i < infoArray.length; i++) {
                                     var request_id = infoArray[i]["request_id"];
-                                    var partner_gaming_username = infoArray[i]["request_gaming_username"];
+                                    var partner_lol_username = infoArray[i]["request_lol_username"];
+                                    var partner_apex_username = infoArray[i]["request_apex_username"];
+                                    var partner_csgo_username = infoArray[i]["request_csgo_username"];
                                     var partner_tier = infoArray[i]["request_partner_tier"];
                                     var partner_division = infoArray[i]["request_partner_division"];
                                     var partner_role = infoArray[i]["request_partner_role"];
                                     var date = infoArray[i]["date"];
                                     var time = infoArray[i]["time"];
+                                    var game_num = infoArray[i]["game_num"];
+
+                                    var gaming_username;
 
                                     // only need the date
                                     date = date.split(" ")[0];
@@ -197,6 +221,19 @@
 
                                     // only need hh:mm
                                     time = time.slice(0, 5);
+
+                                    // get gaming username based on game num
+                                    if (game_num == 1) {
+                                        partner_gaming_username = partner_lol_username;
+                                    }
+
+                                    else if (game_num == 2) {
+                                        partner_gaming_username = partner_apex_username;
+                                    }
+
+                                    else if (game_num == 3) {
+                                        partner_gaming_username = partner_csgo_username;
+                                    }
 
                                     var table_body = $("#table_body_id");
 

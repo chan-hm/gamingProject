@@ -49,7 +49,9 @@
                     var username = infoArray[0]["username"];
                     var email = infoArray[0]["email"];
                     var password = infoArray[0]["password"];
-                    var gaming_username = infoArray[0]["gaming_username"];
+                    var lol_username = infoArray[0]["lol_username"];
+                    var apex_username = infoArray[0]["apex_username"];
+                    var csgo_username = infoArray[0]["csgo_username"];
 
                     console.log(username);
 
@@ -58,7 +60,9 @@
                     document.getElementById("username_id").value = username;
                     document.getElementById("email_id").value = email;
                     document.getElementById("password_id").value = password;
-                    document.getElementById("gamingUsername_id").value = gaming_username;
+                    document.getElementById("lolUsername_id").value = lol_username;
+                    document.getElementById("apexUsername_id").value = apex_username;
+                    document.getElementById("csgoUsername_id").value = csgo_username;
                 }
             });
         }
@@ -128,12 +132,14 @@
             var username_input = $('#username_id').val();
             var email_input = $('#email_id').val();
             var password_input = $('#password_id').val();
-            var gamingUsername_input = $('#gamingUsername_id').val();
+            var lolUsername_input = $('#lolUsername_id').val();
+            var apexUsername_input = $('#apexUsername_id').val();
+            var csgoUsername_input = $('#csgoUsername_id').val();
 
             var email_pattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9._%+-]+\.)+[a-zA-Z]{2,}$/;
 
             // all inputs are required
-            if (username_input == "" || email_input == "" || password_input == "" || gamingUsername_input == "") {
+            if (username_input == "" || email_input == "" || password_input == "" || lolUsername_input == "" || apexUsername_input == "" || csgoUsername_input == "") {
                 alert("Please fill in all fields.")
             }
 
@@ -145,7 +151,7 @@
 
             else {
                 var webMethod = "gamingProject.asmx/SaveInfo";
-                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), gaming_username: $('#gamingUsername_id').val() };
+                var parameters = { username: $('#username_id').val(), email: $('#email_id').val(), password: $('#password_id').val(), lol_username: $('#lolUsername_id').val(), apex_username: $('#apexUsername_id').val(), csgo_username: $('#csgoUsername_id').val() };
                 console.log(parameters);
 
                 var json_data = JSON.stringify(parameters);
@@ -246,10 +252,28 @@
 
         <div class="row my-md-2">
             <div class="col-md-2 col-form-label"></div>
-            <label for="inputGameUsername" class="col-md-4 col-form-label">Gaming Username : </label>
+            <label for="inputGameUsername" class="col-md-4 col-form-label">LOL Username : </label>
 
             <div class="col-md-6" id="gamingUsernameContainer_id">
-                <input type="text" class="form-control me-md-2 w-75" id="gamingUsername_id">
+                <input type="text" class="form-control me-md-2 w-75" id="lolUsername_id" placeholder="Put N/A if not applicable.">
+            </div>
+        </div>
+
+        <div class="row my-md-2">
+            <div class="col-md-2 col-form-label"></div>
+            <label for="inputGameUsername" class="col-md-4 col-form-label">Apex Username : </label>
+
+            <div class="col-md-6" id="gamingUsernameContainer_id">
+                <input type="text" class="form-control me-md-2 w-75" id="apexUsername_id" placeholder="Put N/A if not applicable.">
+            </div>
+        </div>
+
+        <div class="row my-md-2">
+            <div class="col-md-2 col-form-label"></div>
+            <label for="inputGameUsername" class="col-md-4 col-form-label">CS GO Username : </label>
+
+            <div class="col-md-6" id="gamingUsernameContainer_id">
+                <input type="text" class="form-control me-md-2 w-75" id="csgoUsername_id" placeholder="Put N/A if not applicable.">
             </div>
         </div>
 
