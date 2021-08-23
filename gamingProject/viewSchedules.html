@@ -94,13 +94,13 @@
                 dataType: "json",
                 success: function (array) {
                     var infoArray = array.d;
-                    //console.log(infoArray);
+                    console.log(infoArray);
 
-                    if (infoArray.length == 0) {
+                    /*if (infoArray.length == 0) {
                         var table_body = $("#table_body_id");
                         var nothing_displayed = "<tr><th>No scheduled date at this moment.</th></tr>";
                         table_body.append(nothing_displayed);
-                    }
+                    }*/
 
                     for (var i = 0; i < infoArray.length; i++) {
                         for (var i = 0; i < infoArray.length; i++) {
@@ -179,95 +179,106 @@
                             table_body.append(tr_close);
                         }
 
-                        var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
-
-                        $.ajax({
-                            type: "POST",
-                            url: webMethod,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (array) {
-                                var infoArray = array.d;
-                                //console.log(infoArray);
-
-                                for (var i = 0; i < infoArray.length; i++) {
-                                    //for (var i = 0; i < infoArray.length; i++) {
-                                    var request_id = infoArray[i]["request_id"];
-                                    var partner_lol_username = infoArray[i]["request_lol_username"];
-                                    var partner_apex_username = infoArray[i]["request_apex_username"];
-                                    var partner_csgo_username = infoArray[i]["request_csgo_username"];
-                                    var partner_tier = infoArray[i]["request_partner_tier"];
-                                    var partner_division = infoArray[i]["request_partner_division"];
-                                    var partner_role = infoArray[i]["request_partner_role"];
-                                    var date = infoArray[i]["date"];
-                                    var time = infoArray[i]["time"];
-                                    var game_num = infoArray[i]["game_num"];
-
-                                    // get game name based on game num 
-                                    if (game_num == 1) {
-                                        game_name = "LOL";
-                                    }
-
-                                    else if (game_num == 2) {
-                                        game_name = "APEX";
-                                    }
-
-                                    else if (game_num == 3) {
-                                        game_name = "CS GO";
-                                    }
-
-                                    var gaming_username;
-
-                                    // only need the date
-                                    date = date.split(" ")[0];
-
-                                    var new_date = date.split("/");
-
-                                    if (new_date[0] < 10) {
-                                        new_date[0] = "0" + new_date[0];
-                                    }
-
-                                    if (new_date[1] < 10) {
-                                        new_date[1] = "0" + new_date[1];
-                                    }
-
-                                    new_date = new_date[0] + "/" + new_date[1] + "/" + new_date[2];
-
-                                    // only need hh:mm
-                                    time = time.slice(0, 5);
-
-                                    // get gaming username based on game num
-                                    if (game_num == 1) {
-                                        partner_gaming_username = partner_lol_username;
-                                    }
-
-                                    else if (game_num == 2) {
-                                        partner_gaming_username = partner_apex_username;
-                                    }
-
-                                    else if (game_num == 3) {
-                                        partner_gaming_username = partner_csgo_username;
-                                    }
-
-                                    var table_body = $("#table_body_id");
-
-                                    var tr_open = "<tr>";
-                                    var gamename_col = tr_open + "<td data-title='Game' class='fw-bold'>" + game_name + "</td>";                                    
-                                    var username_col = gamename_col + "<td data-title='Gaming Username'>" + partner_gaming_username + "</td>";
-                                    var rankTier_col = username_col + "<td data-title='Rank Tier'>" + partner_tier + "</td>";
-                                    var rankDivision_col = rankTier_col + "<td data-title='Rank Division'>" + partner_division + "</td>";
-                                    var role_col = rankDivision_col + "<td data-title='Role'>" + partner_role + "</td>";
-                                    var date_col = role_col + "<td data-title='Date'>" + new_date + "</td>";
-                                    var time_col = date_col + "<td data-title='Time'>" + time + "</td>";
-                                    var tr_close = time_col + "</tr>";
-
-                                    table_body.append(tr_close);    
-                                }
-                            }
-                        });   
+                         
                     }
                 }
             });
+
+
+            var webMethod = "gamingProject.asmx/ViewSchedulesPartner";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (array) {
+                    var infoArray = array.d;
+                    console.log(infoArray);
+
+                   /* if (infoArray.length == 0) {
+                        var table_body = $("#table_body_id");
+                        var nothing_displayed = "<tr><th>No scheduled date at this moment.</th></tr>";
+                        table_body.append(nothing_displayed);
+                    } */
+
+                    for (var i = 0; i < infoArray.length; i++) {
+                        //for (var i = 0; i < infoArray.length; i++) {
+                        var request_id = infoArray[i]["request_id"];
+                        var partner_lol_username = infoArray[i]["request_lol_username"];
+                        var partner_apex_username = infoArray[i]["request_apex_username"];
+                        var partner_csgo_username = infoArray[i]["request_csgo_username"];
+                        var partner_tier = infoArray[i]["request_partner_tier"];
+                        var partner_division = infoArray[i]["request_partner_division"];
+                        var partner_role = infoArray[i]["request_partner_role"];
+                        var date = infoArray[i]["date"];
+                        var time = infoArray[i]["time"];
+                        var game_num = infoArray[i]["game_num"];
+
+                        // get game name based on game num 
+                        if (game_num == 1) {
+                            game_name = "LOL";
+                        }
+
+                        else if (game_num == 2) {
+                            game_name = "APEX";
+                        }
+
+                        else if (game_num == 3) {
+                            game_name = "CS GO";
+                        }
+
+                        var gaming_username;
+
+                        // only need the date
+                        date = date.split(" ")[0];
+
+                        var new_date = date.split("/");
+
+                        if (new_date[0] < 10) {
+                            new_date[0] = "0" + new_date[0];
+                        }
+
+                        if (new_date[1] < 10) {
+                            new_date[1] = "0" + new_date[1];
+                        }
+
+                        new_date = new_date[0] + "/" + new_date[1] + "/" + new_date[2];
+
+                        // only need hh:mm
+                        time = time.slice(0, 5);
+
+                        // get gaming username based on game num
+                        if (game_num == 1) {
+                            partner_gaming_username = partner_lol_username;
+                        }
+
+                        else if (game_num == 2) {
+                            partner_gaming_username = partner_apex_username;
+                        }
+
+                        else if (game_num == 3) {
+                            partner_gaming_username = partner_csgo_username;
+                        }
+
+                        var table_body = $("#table_body_id");
+
+                        var tr_open = "<tr>";
+                        var gamename_col = tr_open + "<td data-title='Game' class='fw-bold'>" + game_name + "</td>";
+                        var username_col = gamename_col + "<td data-title='Gaming Username'>" + partner_gaming_username + "</td>";
+                        var rankTier_col = username_col + "<td data-title='Rank Tier'>" + partner_tier + "</td>";
+                        var rankDivision_col = rankTier_col + "<td data-title='Rank Division'>" + partner_division + "</td>";
+                        var role_col = rankDivision_col + "<td data-title='Role'>" + partner_role + "</td>";
+                        var date_col = role_col + "<td data-title='Date'>" + new_date + "</td>";
+                        var time_col = date_col + "<td data-title='Time'>" + time + "</td>";
+                        var tr_close = time_col + "</tr>";
+
+                        table_body.append(tr_close);
+                    }
+                }
+            });
+
+
         }
 
         $(document).ready(function () {
